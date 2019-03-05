@@ -1,8 +1,10 @@
-﻿using System;
+﻿using DataAccess.DataModel;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace BoardGames.Models
+namespace DataAccessr
 {
     public partial class BoardGamesContext : DbContext
     {

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BoardGames.Models;
-using Microsoft.AspNetCore.Http;
+﻿using BusinessAccess;
 using Microsoft.AspNetCore.Mvc;
-using BoardGames.BAL;
+using System.Threading.Tasks;
 
 namespace BoardGames.Controllers
 {
@@ -23,6 +18,7 @@ namespace BoardGames.Controllers
 
         // GET: api/Visitor
         [HttpGet]
+        [Route("GetGamesRatings")]
         public async Task<IActionResult> GetGamesRatingDetails()
         {
             try
@@ -40,6 +36,7 @@ namespace BoardGames.Controllers
         [HttpPost]
         public void Post([FromBody] string value)
         {
+
         }
     }
 }

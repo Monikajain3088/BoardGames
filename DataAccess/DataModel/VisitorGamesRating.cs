@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BoardGames.Models
+namespace DataAccess.DataModel
 {
     public partial class VisitorGamesRating
     {

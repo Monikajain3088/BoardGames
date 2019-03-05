@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace BoardGames.Models
+namespace BusinessAccess.Model
 {
-    public class GamesRatingDetailsSP
+  public  class GamesRating
     {
-
-        [Key]
         public int GameId { get; set; }
         public string GameName { get; set; }
         public int? AverageRating { get; set; }
