@@ -7,6 +7,7 @@ namespace BoardGames.Models
     {
         public Game()
         {
+
             VisitorGamesRating = new HashSet<VisitorGamesRating>();
         }
 
