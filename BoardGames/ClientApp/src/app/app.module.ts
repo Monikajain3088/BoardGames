@@ -9,23 +9,30 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { VisitorRatingComponent } from './visitor-rating/visitor-rating.component';
+import {MatTableModule} from '@angular/material/table';
+
 
 @NgModule({
   declarations: [
     AppComponent,
+    //MatTableModule,
     NavMenuComponent,
     HomeComponent,
     CounterComponent,
-    FetchDataComponent
+    FetchDataComponent,
+    VisitorRatingComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    MatTableModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'visitor-rating', component: VisitorRatingComponent },
     ])
   ],
   providers: [],
