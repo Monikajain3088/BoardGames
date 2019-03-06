@@ -6,7 +6,7 @@ namespace BusinessAccess.Model
 {
    public class VisitorRating: GamesRating
     {
-        public int? Rating { get; set; }
+        //public int? Rating { get; set; }
        // public int VisitorCount { get; set; }
         public string VisitorName { get; set; }
     }

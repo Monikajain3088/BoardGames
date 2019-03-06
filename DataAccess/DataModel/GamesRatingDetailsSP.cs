@@ -13,6 +13,7 @@ namespace DataAccess.DataModel
         public int GameId { get; set; }
         public string GameName { get; set; }
         public int? AverageRating { get; set; }
-       
+        public int? Rating { get; set; }
+
     }
 }

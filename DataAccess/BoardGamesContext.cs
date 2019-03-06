@@ -88,11 +88,11 @@ namespace DataAccessr
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
-                entity.HasOne(d => d.Game)
-                    .WithMany(p => p.VisitorGamesRating)
-                    .HasForeignKey(d => d.GameId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_VisitorGamesRating_Game");
+                //entity.HasOne(d => d.Game)
+                //    .WithMany(p => p.VisitorGamesRating)
+                //    .HasForeignKey(d => d.GameId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_VisitorGamesRating_Game");
 
                 entity.HasOne(d => d.Visitor)
                     .WithMany(p => p.VisitorGamesRating)

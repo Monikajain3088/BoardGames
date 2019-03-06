@@ -26,8 +26,8 @@ namespace BusinessAccess
                             {
                                 GameId = x.GameId,
                                 GameName = x.GameName,
-                                AverageRating = x.AverageRating
-                                
+                                AverageRating = x.AverageRating,
+                                Rating= x.Rating
                             }).ToListAsync();
             }
             catch (Exception ex)

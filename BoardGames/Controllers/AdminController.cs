@@ -1,6 +1,8 @@
 ﻿using BusinessAccess;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using DataAccess.DataModel;
+using System;
 
 namespace BoardGames.Controllers
 {
@@ -14,6 +16,7 @@ namespace BoardGames.Controllers
             boardGamesRepository = _boardGamesRepository;
         }
         // GET: api/Admin
+        // Get Game id, name, visitor count and when click on count show visitor name and its rating
         [HttpGet]
         [Route("GamesVisitorRatings")]
         public async Task<IActionResult> GetVisitorGamesRatingDetails()
@@ -23,23 +26,66 @@ namespace BoardGames.Controllers
                 return Ok(await boardGamesRepository.GetVisitorGamesRatingDetails());
 
             }
-            catch
+            catch(Exception ex)
             {
                 return BadRequest();
             }
         }
 
-        // POST: api/Admin
+        // Adding Game by admin
         [HttpPost]
-        public void Post([FromBody] string value)
+        [Route("AddGame")]
+        public async Task<IActionResult> AddGame([FromBody]Game game)
         {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var gameId = await boardGamesRepository.AddGame(game);
+                    if (gameId > 0)
+                    {
+                        return Ok(gameId);
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
+                }
+                catch(Exception ex)
+                {
+                 
+                    return BadRequest();
+
+                }
+
+            }
+
+            return BadRequest();
         }
 
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        // Delete the game based on passed game id
+        [HttpDelete]
+        [Route("DeleteGame")]
+        public async Task<IActionResult> DeleteGame(int? gameId)
         {
-
+            int result = 0;
+            if (gameId == null)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                result = await boardGamesRepository.DeleteGame(gameId);
+                if (result == 0)
+                {
+                    return NotFound();
+                }
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest();
+            }
         }
     }
 }
