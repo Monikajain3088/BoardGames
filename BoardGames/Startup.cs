@@ -33,7 +33,7 @@ namespace BoardGames
             });
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "CasinoGamessApi", Version = "v1" });
+                c.SwaggerDoc("v1", new Info { Title = "BoardGamessApi", Version = "v1" });
             });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<BoardGamesContext>(item => item.UseSqlServer(Configuration.GetConnectionString("BoardGamesDBConnection")));
@@ -66,7 +66,7 @@ namespace BoardGames
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "CasinoGamessApi V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "BoardGamessApi V1");
             });
             app.UseCors("EnableCORS");
             app.UseHttpsRedirection();
