@@ -8,13 +8,11 @@ namespace BoardGames.Controllers
     [ApiController]
     public class VisitorController : ControllerBase
     {
-
-        //protected BoardGamesContext _Context { get; set; }
-
-        //public VisitorController(BoardGamesContext boardGamesContext)
-        //{
-        //    this._Context = boardGamesContext;
-        //}
+       IBoardGamesRepository boardGamesRepository;
+        public VisitorController(IBoardGamesRepository _boardGamesRepository)
+        {
+            boardGamesRepository = _boardGamesRepository;
+        }
 
         // GET: api/Visitor
         [HttpGet]
@@ -23,7 +21,7 @@ namespace BoardGames.Controllers
         {
             try
             {
-                return Ok(await GamesRatingCollection.GetGamesRatingDetails());
+                return Ok(await boardGamesRepository.GetGamesRatingDetails());
 
             }
             catch

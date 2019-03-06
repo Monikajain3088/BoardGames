@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
+using BusinessAccess;
+using DataAccessr;
+using Microsoft.EntityFrameworkCore;
 
 namespace BoardGames
 {
@@ -21,11 +24,6 @@ namespace BoardGames
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Info { Title = "CasinoGamessApi", Version = "v1" });
-            });
             services.AddCors(options =>
             {
                 options.AddPolicy("EnableCORS", builder =>
@@ -33,6 +31,15 @@ namespace BoardGames
                     builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials().Build();
                 });
             });
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "CasinoGamessApi", Version = "v1" });
+            });
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddDbContext<BoardGamesContext>(item => item.UseSqlServer(Configuration.GetConnectionString("BoardGamesDBConnection")));
+            services.AddScoped<IBoardGamesRepository, BoardGamesRepository>();
+            
+            
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {

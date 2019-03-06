@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using BusinessAccess;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BoardGames.Controllers
@@ -11,11 +8,25 @@ namespace BoardGames.Controllers
     [ApiController]
     public class AdminController : ControllerBase
     {
+        IBoardGamesRepository boardGamesRepository;
+        public AdminController(IBoardGamesRepository _boardGamesRepository)
+        {
+            boardGamesRepository = _boardGamesRepository;
+        }
         // GET: api/Admin
         [HttpGet]
-        public IEnumerable<string> Get()
+        [Route("GamesVisitorRatings")]
+        public async Task<IActionResult> GetVisitorGamesRatingDetails()
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                return Ok(await boardGamesRepository.GetVisitorGamesRatingDetails());
+
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         // POST: api/Admin
@@ -28,6 +39,7 @@ namespace BoardGames.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+
         }
     }
 }

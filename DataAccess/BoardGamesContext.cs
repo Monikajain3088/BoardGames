@@ -21,15 +21,17 @@ namespace DataAccessr
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<Visitor> Visitor { get; set; }
         public virtual DbSet<VisitorGamesRating> VisitorGamesRating { get; set; }
+        public virtual DbSet<GameVisitorRaingDetailsSP> GameVisitorRaingDetailsSP { get; set; }
         public virtual DbSet<GamesRatingDetailsSP> GamesRatingDetailsSP { get; set; }
+        
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer("Server=tcp:aspnetcoretest.database.windows.net,1433;Initial Catalog=BoardGames;Persist Security Info=False;User ID=Admin_Monika;Password=ILoveYou2;MultipleActiveResultSets=true;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-            }
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    if (!optionsBuilder.IsConfigured)
+        //    {
+        //        optionsBuilder.UseSqlServer("Server=tcp:aspnetcoretest.database.windows.net,1433;Initial Catalog=BoardGames;Persist Security Info=False;User ID=Admin_Monika;Password=ILoveYou2;MultipleActiveResultSets=true;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+        //    }
+        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
