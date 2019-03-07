@@ -11,23 +11,25 @@ namespace BusinessAccess
 {
     public class BoardGamesRepository: IBoardGamesRepository
     {
-        BoardGamesContext _Context;
+        private readonly BoardGamesContext _Context;
         public BoardGamesRepository(BoardGamesContext _db)
         {
             _Context = _db;
         }
-        public async Task<List<GamesRating>> GetGamesRatingDetails()
+
+        // Visitor: Function Get Games and its Average Ratings given by each visitor
+        public async Task<List<GamesRating>> GetGamesAverageRatings()
         {
             try
             {
-                    return await _Context.GamesRatingDetailsSP
+                   return await _Context.GamesRatingDetailsSP
                             .FromSql("Exec dbo.[GetGamesAverageRating]")
                             .Select(x => new GamesRating
                             {
                                 GameId = x.GameId,
                                 GameName = x.GameName,
                                 AverageRating = x.AverageRating,
-                                Rating= x.Rating
+                                Rating = x.Rating
                             }).ToListAsync();
             }
             catch (Exception ex)
@@ -36,7 +38,17 @@ namespace BusinessAccess
             }
         }
 
-        //
+        // Visitor: Function to Update the Visitot Rating 
+        public async Task UpdateVisitorRatinngs(Visitor visitorRating)
+        {
+            if (_Context != null)
+            {
+                _Context.Visitor.Update(visitorRating);
+                await _Context.SaveChangesAsync();
+            }
+        }
+
+        //Admin: Function to Get Game and its visitor count. Also on click of visitor it gives, Visitor Name and individual rating against each Game.
         public async Task<List<VisitorRating>> GetVisitorGamesRatingDetails()
         {
             try
@@ -58,20 +70,21 @@ namespace BusinessAccess
             }
         }
 
+        //Admin: Function to add the Game 
         public async Task<int> AddGame(Game game)
         {
 
             if (_Context != null)
             {
+                
                 await _Context.Game.AddAsync(game);
                 await _Context.SaveChangesAsync();
-
-                return game.GameId;
+                return 1;
             }
-
             return 0;
         }
 
+        //Admin: Function to Delete the Game
         public async Task<int> DeleteGame(int? gameId)
         {
             int result = 0;
@@ -79,13 +92,11 @@ namespace BusinessAccess
             {
                 //Find the game for specific game id
                 var game = await _Context.Game.FirstOrDefaultAsync(x => x.GameId == gameId);
-
                 if (game != null)
                 {
-                    //Delete that game
-                    _Context.Game.Remove(game);
-
-                    //Commit the transaction
+                    //Delete that game // _Context.Game.Remove(game); (Hard Delete - not fesable)
+                    game.IsDeleted = true;
+                    _Context.Game.Update(game);
                     result = await _Context.SaveChangesAsync();
                 }
                 return result;
@@ -93,16 +104,22 @@ namespace BusinessAccess
             return result;
         }
 
-        public async Task UpdateGameRatinng(GamesRatingDetailsSP gamesRating)
+        // Auth: Function to check login details is valid or not
+        public bool IsValidUser(LoginView userCredetials)
         {
-            if (_Context != null)
+            try
             {
-                //Delete that post
-                _Context.GamesRatingDetailsSP.Update(gamesRating);
-
-                //Commit the transaction
-                await _Context.SaveChangesAsync();
+               // if (_Context != null)
+                    return _Context.User.Any(x => (string.Equals(x.LoginId, userCredetials.LoginId) && (string.Equals(x.Password, userCredetials.Password))));
+ 
             }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
+
+
     }
 }

@@ -10,7 +10,7 @@ namespace BoardGames.Controllers
     [ApiController]
     public class AdminController : ControllerBase
     {
-        IBoardGamesRepository boardGamesRepository;
+        private readonly IBoardGamesRepository boardGamesRepository;
         public AdminController(IBoardGamesRepository _boardGamesRepository)
         {
             boardGamesRepository = _boardGamesRepository;
@@ -43,13 +43,9 @@ namespace BoardGames.Controllers
                 {
                     var gameId = await boardGamesRepository.AddGame(game);
                     if (gameId > 0)
-                    {
                         return Ok(gameId);
-                    }
                     else
-                    {
                         return NotFound();
-                    }
                 }
                 catch(Exception ex)
                 {
@@ -57,9 +53,7 @@ namespace BoardGames.Controllers
                     return BadRequest();
 
                 }
-
             }
-
             return BadRequest();
         }
 
@@ -70,9 +64,7 @@ namespace BoardGames.Controllers
         {
             int result = 0;
             if (gameId == null)
-            {
                 return BadRequest();
-            }
             try
             {
                 result = await boardGamesRepository.DeleteGame(gameId);

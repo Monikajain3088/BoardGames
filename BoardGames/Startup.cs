@@ -9,6 +9,9 @@ using Swashbuckle.AspNetCore.Swagger;
 using BusinessAccess;
 using DataAccessr;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace BoardGames
 {
@@ -24,6 +27,7 @@ namespace BoardGames
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Enable Cors
             services.AddCors(options =>
             {
                 options.AddPolicy("EnableCORS", builder =>
@@ -31,19 +35,37 @@ namespace BoardGames
                     builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials().Build();
                 });
             });
+            // Add Swagger
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "BoardGamessApi", Version = "v1" });
             });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            // Add connection string config
             services.AddDbContext<BoardGamesContext>(item => item.UseSqlServer(Configuration.GetConnectionString("BoardGamesDBConnection")));
+            // add DI Pattern
             services.AddScoped<IBoardGamesRepository, BoardGamesRepository>();
-            
-            
             // In production, the Angular files will be served from this directory
+   
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
+            });
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(Options =>
+            {
+                Options.RequireHttpsMetadata = false;
+
+                Options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+
+                    ValidIssuer = Configuration["JwtSecurityToken:Issuer"],
+                    ValidAudience = Configuration["JwtSecurityToken:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtSecurityToken:Key"]))
+                };
             });
         }
 
@@ -69,6 +91,7 @@ namespace BoardGames
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "BoardGamessApi V1");
             });
             app.UseCors("EnableCORS");
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();

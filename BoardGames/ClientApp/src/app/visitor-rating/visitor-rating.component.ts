@@ -14,9 +14,9 @@ export class VisitorRatingComponent implements OnInit {
   }
  public listData: MatTableDataSource<any>;
  public displayedColumns: string[] = ['gameId','gameName','averageRating','rating'];
-  // @ViewChild(MatSort) sort: MatSort;
-  // @ViewChild(MatPaginator) paginator: MatPaginator;
-  // searchKey: string;
+   @ViewChild(MatSort) sort: MatSort;
+   @ViewChild(MatPaginator) paginator: MatPaginator;
+   searchKey: string;
 
 private game;
 public ArrayNItin;
@@ -26,10 +26,11 @@ public Gt;
    this._gameService.getGameList().subscribe(
      result => { this.ArrayNItin = result;
       this.listData = new MatTableDataSource(this.ArrayNItin);
-
+      this.listData.sort = this.sort;
+      this.listData.paginator = this.paginator;
     console.log('data has come'); }
      , error => console.error(error));
-    
+     
   //  this.listData.sort = this.sort;
   //  this.listData.paginator = this.paginator;
   //  this.listData.filterPredicate = (data, filter) => {

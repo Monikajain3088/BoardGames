@@ -5,9 +5,9 @@ VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BoardGames", "BoardGames\BoardGames.csproj", "{07380403-5698-4464-AAE7-06469A2FB0BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{2BB1E5C8-1AF3-4008-AF12-3AFF7BCB33F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{2BB1E5C8-1AF3-4008-AF12-3AFF7BCB33F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessAccess", "BusinessAccess\BusinessAccess.csproj", "{12ABAF6D-B04F-433D-878F-F11C7F597006}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessAccess", "BusinessAccess\BusinessAccess.csproj", "{12ABAF6D-B04F-433D-878F-F11C7F597006}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

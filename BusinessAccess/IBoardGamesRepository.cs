@@ -10,9 +10,9 @@ namespace BusinessAccess
     public interface IBoardGamesRepository
     {
         //visitor controller
-        Task<List<GamesRating>> GetGamesRatingDetails();
+        Task<List<GamesRating>> GetGamesAverageRatings();
         //visitor controller
-        Task UpdateGameRatinng(GamesRatingDetailsSP gamesRating);
+        Task UpdateVisitorRatinngs(Visitor visitorRating);
 
         // admin controller
         Task<List<VisitorRating>> GetVisitorGamesRatingDetails();
@@ -20,6 +20,8 @@ namespace BusinessAccess
         Task<int> AddGame(Game game);
         // admin controller
         Task<int> DeleteGame(int? gameId);
+
+        bool IsValidUser(LoginView userCredetials);
 
     }
 }

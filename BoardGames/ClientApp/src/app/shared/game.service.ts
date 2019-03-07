@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 export class GameService {
   public game: Game[];
 
-  constructor(public http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+  constructor(public http: HttpClient, @Inject('BASE_URL') public baseUrl: string) {
 
   }
  public getGameList() {

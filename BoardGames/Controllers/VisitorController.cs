@@ -8,7 +8,7 @@ namespace BoardGames.Controllers
     [ApiController]
     public class VisitorController : ControllerBase
     {
-       IBoardGamesRepository boardGamesRepository;
+        private readonly IBoardGamesRepository boardGamesRepository;
         public VisitorController(IBoardGamesRepository _boardGamesRepository)
         {
             boardGamesRepository = _boardGamesRepository;
@@ -21,7 +21,7 @@ namespace BoardGames.Controllers
         {
             try
             {
-                return Ok(await boardGamesRepository.GetGamesRatingDetails());
+                return Ok(await boardGamesRepository.GetGamesAverageRatings());
 
             }
             catch

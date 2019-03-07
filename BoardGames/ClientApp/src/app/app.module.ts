@@ -11,6 +11,8 @@ import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { VisitorRatingComponent } from './visitor-rating/visitor-rating.component';
 import {MatTableModule} from '@angular/material/table';
+import { AdminViewComponent } from './admin-view/admin-view.component';
+import { MatSortModule } from '@angular/material';
 
 
 @NgModule({
@@ -21,13 +23,15 @@ import {MatTableModule} from '@angular/material/table';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    VisitorRatingComponent
+    VisitorRatingComponent,
+    AdminViewComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
     MatTableModule,
+   // MatSortModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
