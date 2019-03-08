@@ -12,13 +12,16 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { VisitorRatingComponent } from './visitor-rating/visitor-rating.component';
 import {MatTableModule} from '@angular/material/table';
 import { AdminViewComponent } from './admin-view/admin-view.component';
-import { MatSortModule } from '@angular/material';
+import { MatSortModule, MatPaginatorModule, MatToolbarModule, MatGridListModule,
+  MatFormFieldModule, MatInputModule, MatRadioModule, MatSelectModule, MatCheckboxModule,
+   MatDatepickerModule, MatNativeDateModule, MatButtonModule, MatSnackBarModule, MatIconModule } from '@angular/material';
+   import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    //MatTableModule,
     NavMenuComponent,
     HomeComponent,
     CounterComponent,
@@ -27,11 +30,26 @@ import { MatSortModule } from '@angular/material';
     AdminViewComponent
   ],
   imports: [
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatGridListModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatButtonModule,
+    MatSnackBarModule,
+    MatTableModule,
+    MatIconModule,
+    MatPaginatorModule,
+    MatSortModule,
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
-    MatTableModule,
-   // MatSortModule,
+
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },

@@ -26,19 +26,10 @@ public Gt;
    this._gameService.getGameList().subscribe(
      result => { this.ArrayNItin = result;
       this.listData = new MatTableDataSource(this.ArrayNItin);
-      this.listData.sort = this.sort;
-      this.listData.paginator = this.paginator;
+    this.listData.paginator=this.paginator;
+    this.listData.sort=this.sort;
     console.log('data has come'); }
      , error => console.error(error));
-     
-  //  this.listData.sort = this.sort;
-  //  this.listData.paginator = this.paginator;
-  //  this.listData.filterPredicate = (data, filter) => {
-  //    return this.displayedColumns.some(ele => {
-  //      return ele != 'actions' && data[ele].toLowerCase().indexOf(filter) != -1;
-  //    });
-// tslint:disable-next-line: comment-format
-   ///};
   }
 
 }
