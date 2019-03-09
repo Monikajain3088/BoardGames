@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
@@ -11,11 +11,14 @@ import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { VisitorRatingComponent } from './visitor-rating/visitor-rating.component';
 import {MatTableModule} from '@angular/material/table';
-import { AdminViewComponent } from './admin-view/admin-view.component';
+
 import { MatSortModule, MatPaginatorModule, MatToolbarModule, MatGridListModule,
   MatFormFieldModule, MatInputModule, MatRadioModule, MatSelectModule, MatCheckboxModule,
-   MatDatepickerModule, MatNativeDateModule, MatButtonModule, MatSnackBarModule, MatIconModule } from '@angular/material';
-   import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+   MatDatepickerModule, MatNativeDateModule, MatButtonModule, MatSnackBarModule, MatIconModule, MatDialogModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { GamedashboardComponent } from './admin/gamedashboard/gamedashboard.component';
+import { AddgameComponent } from './admin/addgame/addgame.component';
+import { AdminViewComponent } from './admin/admin-view/admin-view.component';
 
 
 
@@ -27,7 +30,9 @@ import { MatSortModule, MatPaginatorModule, MatToolbarModule, MatGridListModule,
     CounterComponent,
     FetchDataComponent,
     VisitorRatingComponent,
-    AdminViewComponent
+    AdminViewComponent,
+    GamedashboardComponent,
+    AddgameComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -48,6 +53,8 @@ import { MatSortModule, MatPaginatorModule, MatToolbarModule, MatGridListModule,
     MatSortModule,
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
+    MatDialogModule,
+    ReactiveFormsModule,
     FormsModule,
 
     RouterModule.forRoot([
@@ -55,9 +62,11 @@ import { MatSortModule, MatPaginatorModule, MatToolbarModule, MatGridListModule,
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'visitor-rating', component: VisitorRatingComponent },
+      { path: 'admin-view', component: AdminViewComponent }
     ])
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents:[AddgameComponent]
 })
 export class AppModule { }
