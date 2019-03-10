@@ -5,7 +5,8 @@ import { AddgameComponent } from '../addgame/addgame.component';
 import { NotificationService } from 'src/app/shared/alert/notification.service';
 import { AdminService } from 'src/app/shared/admin.service';
 import { AdminvistordetailsComponent } from '../adminvistordetails/adminvistordetails.component';
-
+import { LoginService } from 'src/app/shared/login/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-view',
@@ -14,7 +15,9 @@ import { AdminvistordetailsComponent } from '../adminvistordetails/adminvistorde
 })
 
 export class AdminViewComponent implements OnInit {
-  constructor( private _adminService: AdminService,private dialog: MatDialog, private notificationService: NotificationService) {
+  constructor( private _adminService: AdminService,private dialog: MatDialog, private notificationService: NotificationService
+    ,public loginService: LoginService,private router: Router
+    ) { 
   }
 
   public listData: MatTableDataSource<any>;
@@ -40,7 +43,14 @@ public LoadGameTable()
 
  // Intialize list data and show in Material grid table
   ngOnInit() {
-    this.LoadGameTable();
+    if(!this.loginService.isLoggedIn)
+    {
+      this.router.navigate(['/visitor-rating']);
+    }
+    else{
+      this.LoadGameTable();
+    }
+    
   }
 
   // Function to clear serach item

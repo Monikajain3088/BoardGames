@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
 import { throwError, Observable } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 
 
@@ -22,7 +23,7 @@ export class LoginService {
   accessToken: string;
   currentUser: string = null;
   redirectUrl: string;
-  get isLoggedIn(): boolean {
+ public get isLoggedIn(): boolean {
     if (localStorage.getItem('userName') == null) {
        return false;
     } else {
@@ -35,7 +36,11 @@ logout(): void {
   localStorage.removeItem('userName') ;
   this.currentUser = null;
 }
-
+getExpiration() {
+  const expiration = localStorage.getItem('expires');
+  const expiresAt = JSON.parse(expiration);
+  return moment(expiresAt);
+}
 private setSession(authResult, userName) {
   const expiresAt = moment().add(authResult.expires, 'second');
   localStorage.setItem('id_token', authResult.token);
@@ -45,17 +50,19 @@ return authResult;
 }
 
 
-public LoginIn(userName: string, password: string) {
+public LoginIn(userName: string, password: string): Observable<TokenParams> {
 
   const credentials = {
     LoginId: userName,
     Password: password
 };
-    return this.http.post(endpoint, credentials,httpOptions).subscribe(result => this.setSession(result, userName)
-    ), error => ( this.handleError<any>('Login'));
+
+return this.http.post(endpoint, credentials, httpOptions).pipe(map(res => this.setSession(res, userName)),
+catchError( this.handleError<any>('Login'))
+);
 }
 
-private handleError<T> (operation = 'operation', result?: T) {
+private handleError<T> (operation = 'Login', result?: T) {
   return (error: any): Observable<T> => {
 
     // TODO: send the error to remote logging infrastructure
