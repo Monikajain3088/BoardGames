@@ -17,7 +17,7 @@ export class VisitorRatingComponent implements OnInit {
   public starList: boolean[] = [true, true, true, true, true];
   public rating: number;
   public listData: MatTableDataSource<any>;
-  public displayedColumns: string[] = ['gameId', 'gameName', 'averageRating', 'rating'];
+  public displayedColumns: string[] = ['srno', 'gameName', 'averageRating', 'rating'];
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   searchKey: string;
@@ -26,9 +26,12 @@ export class VisitorRatingComponent implements OnInit {
   ngOnInit() {
     this._gameService.getGameList().subscribe(
       result => {
+        let i:number=1;
         this.gameList = result;
         this.gameList.forEach(element => {
           element.starList = this.starList;
+          element.srno=i;
+          i=i+1;
         });
         this.listData = new MatTableDataSource(this.gameList);
         this.listData.paginator = this.paginator;

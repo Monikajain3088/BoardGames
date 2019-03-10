@@ -10,9 +10,9 @@
   
 <div class="mat-elevation-z8">
   <mat-table [dataSource]="listData"  matSort>
-    <ng-container matColumnDef="gameId">
+    <ng-container matColumnDef="srno">
       <mat-header-cell *matHeaderCellDef  mat-sort-header>Game ID</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.gameId}}</mat-cell>
+      <mat-cell *matCellDef="let element">{{element.srno}}</mat-cell>
     </ng-container> 
     <ng-container matColumnDef="gameName">
 		  <mat-header-cell *matHeaderCellDef  mat-sort-header>Game Name</mat-header-cell>
