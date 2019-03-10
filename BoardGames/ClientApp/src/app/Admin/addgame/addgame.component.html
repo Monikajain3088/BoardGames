@@ -3,12 +3,11 @@
 </p>
 <div>
   <input formControlName="txtboxName" matInput placeholder="Game Name">
-     
 </div>
 <p>
 
 </p>
 <div class="button-row">
-  <button mat-raised-button color="primary" type="submit" [disabled]="service.form.invalid">Add</button>
+  <button mat-raised-button color="primary" type="submit" [disabled]="service.form.invalid" (click)="onAdd()">Add</button>
   <button mat-raised-button color="warn" (click)="onClear()">Cancel</button>
 </div>

@@ -19,7 +19,7 @@ namespace BusinessAccess
         // admin controller
         Task<int> AddGame(Game game);
         // admin controller
-        Task<int> DeleteGame(int? gameId);
+        Task<int> DeleteGame(int gameId);
 
         bool IsValidUser(LoginView userCredetials);
 

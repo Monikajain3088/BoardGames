@@ -23,14 +23,15 @@
 		  <mat-header-cell *matHeaderCellDef  mat-sort-header><b>Game Name</b></mat-header-cell>
 		  <mat-cell *matCellDef="let element">{{element.gameName}}</mat-cell>
 		</ng-container>
-		<ng-container matColumnDef="userCount" >
-		  <mat-header-cell *matHeaderCellDef mat-sort-header><b>User Count</b></mat-header-cell>
-		  <mat-cell *matCellDef="let element">{{ element.gameName }}</mat-cell>
+		<ng-container matColumnDef="visitorCount" >
+		  <mat-header-cell *matHeaderCellDef mat-sort-header><b>Visitor Count</b></mat-header-cell>
+      <mat-cell *matCellDef="let element"><a (click)="GetVisitorInfo()" 
+        class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">{{ element.visitorCount }}</a></mat-cell>
     </ng-container> 
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef><b>Actions</b></mat-header-cell>
       <mat-cell *matCellDef="let row">
-        <button mat-icon-button color="warn" (click)="onDelete(row.$key)"><mat-icon>delete_outline</mat-icon></button>
+        <button mat-icon-button color="warn" (click)="onDelete(row)"><mat-icon>delete_outline</mat-icon></button>
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="loading">

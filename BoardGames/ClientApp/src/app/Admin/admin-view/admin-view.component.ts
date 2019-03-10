@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { MatDialog, MatDialogConfig } from "@angular/material";
-import {MatToolbarModule} from '@angular/material/toolbar';
 import { AddgameComponent } from '../addgame/addgame.component';
 import { NotificationService } from 'src/app/shared/alert/notification.service';
 import { AdminService } from 'src/app/shared/admin.service';
+import { AdminvistordetailsComponent } from '../adminvistordetails/adminvistordetails.component';
+
 
 @Component({
   selector: 'app-admin-view',
@@ -17,23 +18,29 @@ export class AdminViewComponent implements OnInit {
   }
 
   public listData: MatTableDataSource<any>;
-  public displayedColumns: string[] = ['gameId','gameName','userCount','actions'];
+  public displayedColumns: string[] = ['gameId','gameName','visitorCount','actions'];
    @ViewChild(MatSort) sort: MatSort;
    @ViewChild(MatPaginator) paginator: MatPaginator;
    searchKey: string;
 
   
-  public Array;
+public Array;
 
-// Intialize list data and show in Material grid table
+// Function to call Game Details Table
+public LoadGameTable()
+{
+  this._adminService.GetVisitorGamesRatingDetails().subscribe(
+    result => { this.Array = result;
+     this.listData = new MatTableDataSource(this.Array);
+     this.listData.sort = this.sort;
+     this.listData.paginator = this.paginator;
+   console.log('data has come!'); }
+    , error => console.error(error));
+}
+
+ // Intialize list data and show in Material grid table
   ngOnInit() {
-    this._adminService.GetVisitorGamesRatingDetails().subscribe(
-      result => { this.Array = result;
-       this.listData = new MatTableDataSource(this.Array);
-       this.listData.sort = this.sort;
-       this.listData.paginator = this.paginator;
-     console.log('data has come!'); }
-      , error => console.error(error));
+    this.LoadGameTable();
   }
 
   // Function to clear serach item
@@ -48,7 +55,7 @@ export class AdminViewComponent implements OnInit {
     this.listData.filter = this.searchKey.trim().toLowerCase();
   }
 
-  // Function to call Add Game - fires on click of "Add button"
+  // Function to call Add Game DialogBox Component- fires on click of "Add button"
   onCreate() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
@@ -58,11 +65,26 @@ export class AdminViewComponent implements OnInit {
   }
 
   // Function to call Delete Game - fires on click of "Delete button"
-  onDelete($key){
+  onDelete(row){ 
     if(confirm('Are you sure to delete this record ?')){
-    //this._adminService.DeleteGame($key);
-   this.notificationService.warn('! Deleted successfully');
+    this._adminService.DeleteGame(row.gameId).subscribe(res=>
+      {
+        console.log('delete record');
+        this.notificationService.warn('! Deleted successfully');
+        this.LoadGameTable();
+      } , error => console.error(error));
+   
     }
+  }
+
+// Function to get visitor info on click of visitorCount column
+  GetVisitorInfo()
+  {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = "50%";
+    this.dialog.open(AdminvistordetailsComponent ,dialogConfig);
   }
 
 

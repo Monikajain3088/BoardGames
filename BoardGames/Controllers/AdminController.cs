@@ -60,11 +60,10 @@ namespace BoardGames.Controllers
         // Delete the game based on passed game id
         [HttpDelete]
         [Route("DeleteGame")]
-        public async Task<IActionResult> DeleteGame(int? gameId)
+        public async Task<IActionResult> DeleteGame(int gameId)
         {
             int result = 0;
-            if (gameId == null)
-                return BadRequest();
+           
             try
             {
                 result = await boardGamesRepository.DeleteGame(gameId);

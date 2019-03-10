@@ -19,6 +19,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GamedashboardComponent } from './admin/gamedashboard/gamedashboard.component';
 import { AddgameComponent } from './admin/addgame/addgame.component';
 import { AdminViewComponent } from './admin/admin-view/admin-view.component';
+import { AdminvistordetailsComponent } from './admin/adminvistordetails/adminvistordetails.component';
 
 
 
@@ -32,7 +33,9 @@ import { AdminViewComponent } from './admin/admin-view/admin-view.component';
     VisitorRatingComponent,
     AdminViewComponent,
     GamedashboardComponent,
-    AddgameComponent
+    AddgameComponent,
+    AdminvistordetailsComponent,
+    
   ],
   imports: [
     BrowserAnimationsModule,
@@ -67,6 +70,6 @@ import { AdminViewComponent } from './admin/admin-view/admin-view.component';
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents:[AddgameComponent]
+  entryComponents:[AddgameComponent,AdminvistordetailsComponent]
 })
 export class AppModule { }

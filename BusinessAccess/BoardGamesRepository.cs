@@ -53,16 +53,24 @@ namespace BusinessAccess
         {
             try
             {
-                    return await _Context.GameVisitorRaingDetailsSP
-                            .FromSql("Exec dbo.[GetVisitorGameRatingDetails]" )
-                            .Select(x => new VisitorRating
-                            {
-                                GameId = x.GameId,
-                                GameName = x.GameName,
-                                Rating = x.Rating,
-                                VisitorName = x.VisitorName
 
+                return await _Context.GameVisitorRaingDetailsSP
+                            .FromSql("Exec dbo.[GetVisitorGameRatingDetails]").GroupBy(x => x.GameId)
+                            .Select(y => new VisitorRating()
+                            {
+                                GameId = y.Key,
+                                GameName = y.Select(x => x.GameName).FirstOrDefault(),
+                                VisitorCount = y.Select(x => string.IsNullOrEmpty(x.VisitorName)).Count() == 1? 0: y.Select(x => x.VisitorName).Count(),
+                                Visitors = y.Select( z=>
+                                new VisitorInfo()
+                                {
+                                    VisitorName = z.VisitorName,
+                                    VisitorRating = z.Rating
+                                }
+                                 ).ToList()
                             }).ToListAsync();
+
+               
             }
             catch (Exception ex)
             {
@@ -76,7 +84,7 @@ namespace BusinessAccess
 
             if (_Context != null)
             {
-                
+                game.IsDeleted = false;
                 await _Context.Game.AddAsync(game);
                 await _Context.SaveChangesAsync();
                 return 1;
@@ -85,7 +93,7 @@ namespace BusinessAccess
         }
 
         //Admin: Function to Delete the Game
-        public async Task<int> DeleteGame(int? gameId)
+        public async Task<int> DeleteGame(int gameId)
         {
             int result = 0;
             if (_Context != null)
