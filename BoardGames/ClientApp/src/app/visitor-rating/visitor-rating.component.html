@@ -1,5 +1,10 @@
 <p>
   Welcome to Board Game Site!!!
+  <a *ngFor="let item of starList; let i=index " (click)="setStar(i)">  
+      <i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>   
+     </a>  
+    <br>  
+    Rating :- {{rating}} stars
 </p>
 
   
@@ -19,7 +24,10 @@
     </ng-container> 
     <ng-container matColumnDef="rating">
 		  <mat-header-cell *matHeaderCellDef mat-sort-header>User Rating</mat-header-cell>
-		  <mat-cell *matCellDef="let element">{{element.rating}}</mat-cell>
+		  <mat-cell *matCellDef="let element" >
+        <a  *ngFor="let item of element.starList; let i=index " (click)="setStar(element,i)" >  
+          <i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>   
+         </a> </mat-cell>
     </ng-container> 
     <ng-container matColumnDef="loading">
       <mat-footer-cell *matFooterCellDef colspan="6">
@@ -31,8 +39,8 @@
         No data.
       </mat-footer-cell>
     </ng-container>
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-header-row *matHeaderRowDef="displayedColumns" ></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="clickontg(row)"></mat-row>
     <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':listData!=null}"></mat-footer-row>
     <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(listData!=null && listData.data.length==0)}"></mat-footer-row>
   </mat-table>

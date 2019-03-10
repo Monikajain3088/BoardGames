@@ -14,7 +14,7 @@ namespace BusinessAccess.Model
         //public string EmailId { get; set; }
 
         [Required]
-        [Display(Name = "UserName")]
+        [Display(Name = "LoginId")]
         public string LoginId { get; set; }
 
         [Required]

@@ -49,7 +49,11 @@
     "karma-coverage-istanbul-reporter": "~1.4.2",
     "karma-jasmine": "~1.1.1",
     "karma-jasmine-html-reporter": "^0.2.2",
-    "typescript": "~2.7.2"
+    "typescript": "~2.7.2",
+    "font-awesome": "^4.7.0",
+    "angular-moment": "^1.3.0",
+    "moment": "^2.24.0",
+    "hammerjs": "^2.0.8"
   },
   "optionalDependencies": {
     "node-sass": "^4.9.3",
