@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatSort, MatPaginator, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginator, MatDialog, MatDialogRef } from '@angular/material';
 import { AdminService } from 'src/app/shared/admin.service';
 
 @Component({
@@ -8,24 +8,22 @@ import { AdminService } from 'src/app/shared/admin.service';
   styleUrls: ['./adminvistordetails.component.css']
 })
 export class AdminvistordetailsComponent implements OnInit {
-
-  constructor(private _adminService: AdminService,private dialog: MatDialog) { }
-
+  private rowdata:any;
   public listData: MatTableDataSource<any>;
-  public displayedColumns: string[] = ['visitorName','rating'];
-   @ViewChild(MatSort) sort: MatSort;
-   @ViewChild(MatPaginator) paginator: MatPaginator;
-   searchKey: string;
-   public Array;
-  ngOnInit() {
-
-    this._adminService.GetVisitorGamesRatingDetails().subscribe(
-      result => { this.Array = result;
-       this.listData = new MatTableDataSource(this.Array);
-       this.listData.sort = this.sort;
-       this.listData.paginator = this.paginator;
-     console.log('data has come!'); }
-      , error => console.error(error));
+  public displayedColumns: string[] = ['visitorName','visitorRating'];
+  constructor(private _adminService: AdminService,private dialog: MatDialog ,
+    private dialogRef:MatDialogRef<AdminvistordetailsComponent>) { 
+     this.rowdata=this._adminService.rowData;
+    this.listData = new MatTableDataSource(this.rowdata);
+   // this.listData.sort = this.sort;
+   // this.listData.paginator = this.paginator;   
   }
 
+  
+
+  ngOnInit() {     
+  }
+  closeDialog(){
+    this.dialogRef.close();
+  }
 }

@@ -1,19 +1,34 @@
 import { Injectable, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
-  public adminview: AdminView[];
+  private _rowData:any;
+  get rowData():any {
+    return this._rowData;
+}
+set rowData(theBar:any) {
+    this._rowData = theBar;
+}
+
+ // public adminview: AdminView[];
   constructor(public http: HttpClient, @Inject('BASE_URL') public baseUrl: string) { }
 
   public GetVisitorGamesRatingDetails() {
     return this.http.get<VisitorGameCollection[]>('https://localhost:44341/' + 'api/Admin/GamesVisitorRatings');
  }
 
- public AddGame() {
-  return this.http.get<AdminView[]>('https://localhost:44341/' + 'api/Admin/AddGame');
+ // Add Game on click og "+Add Game"
+ public AddGame(GameName: string) {
+  const headers = new HttpHeaders().set('content-type', 'application/json');
+  var body = {
+    GameName: GameName,
+    CreatedBy: "Admin"
+  }
+  return this.http.post<any>('https://localhost:44341/' + 'api/Admin/AddGame', body, {
+    headers});
 }
  
  public DeleteGame(GameId: number) {
@@ -21,12 +36,6 @@ export class AdminService {
 }
 }
 
-export interface AdminView {
-  GameName: string;
-  VisitorName: string;
-  Rating: number;
-  GameId: number;
-}
 export interface VisitorGameCollection
 {
   GameName: string;

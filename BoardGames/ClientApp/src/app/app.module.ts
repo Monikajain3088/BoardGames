@@ -17,9 +17,10 @@ import { MatSortModule, MatPaginatorModule, MatToolbarModule, MatGridListModule,
    MatDatepickerModule, MatNativeDateModule, MatButtonModule, MatSnackBarModule, MatIconModule, MatDialogModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GamedashboardComponent } from './admin/gamedashboard/gamedashboard.component';
-import { AddgameComponent } from './admin/addgame/addgame.component';
-import { AdminViewComponent } from './admin/admin-view/admin-view.component';
-import { AdminvistordetailsComponent } from './admin/adminvistordetails/adminvistordetails.component';
+//import { AddgameComponent } from './admin/addgame/addgame.component';
+//import { AdminViewComponent } from './admin/admin-view/admin-view.component';
+import {AdminvistordetailsComponent} from './Admin/adminvistordetails/adminvistordetails.component';
+import {AdminViewComponent, AddgameComponent } from './Admin/admin-view/admin-view.component'
 
 
 
@@ -33,8 +34,8 @@ import { AdminvistordetailsComponent } from './admin/adminvistordetails/adminvis
     VisitorRatingComponent,
     AdminViewComponent,
     GamedashboardComponent,
-    AddgameComponent,
     AdminvistordetailsComponent,
+    AddgameComponent
     
   ],
   imports: [
@@ -70,6 +71,6 @@ import { AdminvistordetailsComponent } from './admin/adminvistordetails/adminvis
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents:[AddgameComponent,AdminvistordetailsComponent]
+  entryComponents:[AdminvistordetailsComponent, AddgameComponent],
 })
 export class AppModule { }

@@ -96,3 +96,7 @@ mat-footer-row mat-footer-cell{
     height: 40px;
     padding: 0px !important;
   }
+
+
+    a { color: #FF0000; } /* CSS link color */
+    a.kinda-link:hover { cursor: pointer; }

@@ -25,8 +25,8 @@
 		</ng-container>
 		<ng-container matColumnDef="visitorCount" >
 		  <mat-header-cell *matHeaderCellDef mat-sort-header><b>Visitor Count</b></mat-header-cell>
-      <mat-cell *matCellDef="let element"><a (click)="GetVisitorInfo()" 
-        class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">{{ element.visitorCount }}</a></mat-cell>
+      <mat-cell *matCellDef="let element"><a  (click)="GetVisitorInfo(element)"
+        ><u>{{ element.visitorCount }}</u></a></mat-cell>
     </ng-container> 
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef><b>Actions</b></mat-header-cell>
