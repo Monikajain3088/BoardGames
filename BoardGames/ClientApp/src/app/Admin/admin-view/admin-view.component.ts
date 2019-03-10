@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
-import { MatDialog, MatDialogConfig } from "@angular/material";
-import { AddgameComponent } from '../addgame/addgame.component';
+import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+//import { AddgameComponent } from '../addgame/addgame.component';
 import { NotificationService } from 'src/app/shared/alert/notification.service';
 import { AdminService } from 'src/app/shared/admin.service';
 import { AdminvistordetailsComponent } from '../adminvistordetails/adminvistordetails.component';
@@ -14,7 +14,7 @@ import { AdminvistordetailsComponent } from '../adminvistordetails/adminvistorde
 })
 
 export class AdminViewComponent implements OnInit {
-  constructor( private _adminService: AdminService,private dialog: MatDialog, private notificationService: NotificationService) {
+  constructor( public _adminService: AdminService,private dialog: MatDialog, public notificationService: NotificationService) {
   }
 
   public listData: MatTableDataSource<any>;
@@ -25,6 +25,8 @@ export class AdminViewComponent implements OnInit {
 
   
 public Array;
+
+
 
 // Function to call Game Details Table
 public LoadGameTable()
@@ -55,13 +57,18 @@ public LoadGameTable()
     this.listData.filter = this.searchKey.trim().toLowerCase();
   }
 
-  // Function to call Add Game DialogBox Component- fires on click of "Add button"
+  // Function to call Add Game DialogBox Component- fires on click of "+Add Game"
   onCreate() {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.width = "20%";
-    this.dialog.open(AddgameComponent,dialogConfig);
+    const dialogRef = this.dialog.open(AddgameComponent, {
+      width: "20%"
+      //data: {name: "test"}
+    });
+
+    // Refresh the Game Table
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.LoadGameTable();
+    });
   }
 
   // Function to call Delete Game - fires on click of "Delete button"
@@ -70,7 +77,7 @@ public LoadGameTable()
     this._adminService.DeleteGame(row.gameId).subscribe(res=>
       {
         console.log('delete record');
-        this.notificationService.warn('! Deleted successfully');
+        this.notificationService.warn('Game:' +row.gameName +' Deleted successfully!');
         this.LoadGameTable();
       } , error => console.error(error));
    
@@ -78,14 +85,42 @@ public LoadGameTable()
   }
 
 // Function to get visitor info on click of visitorCount column
-  GetVisitorInfo()
+  GetVisitorInfo(record)
   {
+    this._adminService.rowData=record.visitors;
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = "50%";
+    dialogConfig.width = "40%";
     this.dialog.open(AdminvistordetailsComponent ,dialogConfig);
   }
+}
 
+// Add game Component functionality here
+  @Component({
+    selector: 'app-addgame',
+    templateUrl: '../addgame/addgame.component.html'
+  })
+
+  export class AddgameComponent  {
+    constructor(private _adminService: AdminService, private notificationService: NotificationService,
+      public dialogRef: MatDialogRef<AddgameComponent>
+     ) {}
+     public gamename='';
+
+     // Function to cancel the game
+      onCancel(): void {
+      this.dialogRef.close();
+    }
+
+    //Function to add Game
+    onAdd(): void {
+      this._adminService.AddGame(this.gamename).subscribe(
+    result => { 
+      console.log('game added');
+      this.notificationService.warn('Game Added successfully!');
+      this.dialogRef.close();
+    }, error => console.error(error));
+}
 
 }
