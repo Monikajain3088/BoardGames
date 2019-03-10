@@ -1,9 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
-div.container{
-    margin: 0px 40px;
-}
+
 
 .fill-remaining-space {
     /* This fills the remaining space, by using flexbox. 
@@ -97,6 +95,3 @@ mat-footer-row mat-footer-cell{
     padding: 0px !important;
   }
 
-
-    a { color: #FF0000; } /* CSS link color */
-    a.kinda-link:hover { cursor: pointer; }

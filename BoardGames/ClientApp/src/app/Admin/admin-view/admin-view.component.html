@@ -1,6 +1,4 @@
-<p>
- Admin:  Welcome to Board Game Site!!!
-</p>
+<mat-toolbar layout-align="center" color="accent">Welcome to Board Games!</mat-toolbar>
 <div class="search-div">
   <button mat-raised-button (click)="onCreate()">
     <mat-icon>add</mat-icon>Add Game
@@ -15,9 +13,9 @@
 
 <div class="mat-elevation-z8">
   <mat-table [dataSource]="listData"  matSort>
-    <ng-container matColumnDef="gameId">
-      <mat-header-cell *matHeaderCellDef  mat-sort-header><b>Game ID</b></mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.gameId}}</mat-cell>
+    <ng-container matColumnDef="srno">
+      <mat-header-cell *matHeaderCellDef  mat-sort-header><b>Sr No.</b></mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.srno}}</mat-cell>
     </ng-container> 
     <ng-container matColumnDef="gameName">
 		  <mat-header-cell *matHeaderCellDef  mat-sort-header><b>Game Name</b></mat-header-cell>
@@ -25,7 +23,7 @@
 		</ng-container>
 		<ng-container matColumnDef="visitorCount" >
 		  <mat-header-cell *matHeaderCellDef mat-sort-header><b>Visitor Count</b></mat-header-cell>
-      <mat-cell *matCellDef="let element"><a  (click)="GetVisitorInfo(element)"
+      <mat-cell *matCellDef="let element"><a style="color: rgb(0, 153, 255)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" (click)="GetVisitorInfo(element)"
         ><u>{{ element.visitorCount }}</u></a></mat-cell>
     </ng-container> 
     <ng-container matColumnDef="actions">

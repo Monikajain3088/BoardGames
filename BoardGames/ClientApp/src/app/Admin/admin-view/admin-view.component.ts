@@ -15,44 +15,49 @@ import { Router } from '@angular/router';
 })
 
 export class AdminViewComponent implements OnInit {
-  constructor( private _adminService: AdminService,private dialog: MatDialog, private notificationService: NotificationService
-    ,public loginService: LoginService,private router: Router
-    ) { 
+  constructor(private _adminService: AdminService, private dialog: MatDialog, private notificationService: NotificationService
+    , public loginService: LoginService, private router: Router
+  ) {
   }
 
   public listData: MatTableDataSource<any>;
-  public displayedColumns: string[] = ['gameId','gameName','visitorCount','actions'];
-   @ViewChild(MatSort) sort: MatSort;
-   @ViewChild(MatPaginator) paginator: MatPaginator;
-   searchKey: string;
-
-  
-public Array;
+  public displayedColumns: string[] = ['srno', 'gameName', 'visitorCount', 'actions'];
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  searchKey: string;
 
 
+  public gameList;
 
-// Function to call Game Details Table
-public LoadGameTable()
-{
-  this._adminService.GetVisitorGamesRatingDetails().subscribe(
-    result => { this.Array = result;
-     this.listData = new MatTableDataSource(this.Array);
-     this.listData.sort = this.sort;
-     this.listData.paginator = this.paginator;
-   console.log('data has come!'); }
-    , error => console.error(error));
-}
 
- // Intialize list data and show in Material grid table
+
+  // Function to call Game Details Table
+  public LoadGameTable() {
+    this._adminService.GetVisitorGamesRatingDetails().subscribe(
+      result => {
+        this.gameList = result;
+        let i: number = 1;
+        this.gameList.forEach(element => {
+          element.srno = i;
+          i = i + 1;
+        });
+        this.listData = new MatTableDataSource(this.gameList);
+        this.listData.sort = this.sort;
+        this.listData.paginator = this.paginator;
+        console.log('data has come!');
+      }
+      , error => console.error(error));
+  }
+
+  // Intialize list data and show in Material grid table
   ngOnInit() {
-    if(!this.loginService.isLoggedIn)
-    {
+    if (!this.loginService.isLoggedIn) {
       this.router.navigate(['/visitor-rating']);
     }
-    else{
+    else {
       this.LoadGameTable();
     }
-    
+
   }
 
   // Function to clear serach item
@@ -82,55 +87,53 @@ public LoadGameTable()
   }
 
   // Function to call Delete Game - fires on click of "Delete button"
-  onDelete(row){ 
-    if(confirm('Are you sure to delete this record ?')){
-    this._adminService.DeleteGame(row.gameId).subscribe(res=>
-      {
+  onDelete(row) {
+    if (confirm('Are you sure to delete this record ?')) {
+      this._adminService.DeleteGame(row.gameId).subscribe(res => {
         console.log('delete record');
-        this.notificationService.warn('Game:' +row.gameName +' Deleted successfully!');
+        this.notificationService.warn('Game: ' + row.gameName + ' Deleted successfully!');
         this.LoadGameTable();
-      } , error => console.error(error));
-   
+      }, error => console.error(error));
+
     }
   }
 
-// Function to get visitor info on click of visitorCount column
-  GetVisitorInfo(record)
-  {
-    this._adminService.rowData=record.visitors;
+  // Function to get visitor info on click of visitorCount column
+  GetVisitorInfo(record) {
+    this._adminService.rowData = record.visitors;
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = "40%";
-    this.dialog.open(AdminvistordetailsComponent ,dialogConfig);
+    this.dialog.open(AdminvistordetailsComponent, dialogConfig);
   }
 }
 
 // Add game Component functionality here
-  @Component({
-    selector: 'app-addgame',
-    templateUrl: '../addgame/addgame.component.html'
-  })
+@Component({
+  selector: 'app-addgame',
+  templateUrl: '../addgame/addgame.component.html'
+})
 
-  export class AddgameComponent  {
-    constructor(private _adminService: AdminService, private notificationService: NotificationService,
-      public dialogRef: MatDialogRef<AddgameComponent>
-     ) {}
-     public gamename='';
+export class AddgameComponent {
+  constructor(private _adminService: AdminService, private notificationService: NotificationService,
+    public dialogRef: MatDialogRef<AddgameComponent>
+  ) { }
+  public gamename = '';
 
-     // Function to cancel the game
-      onCancel(): void {
-      this.dialogRef.close();
-    }
+  // Function to cancel the game
+  onCancel(): void {
+    this.dialogRef.close();
+  }
 
-    //Function to add Game
-    onAdd(): void {
-      this._adminService.AddGame(this.gamename).subscribe(
-    result => { 
-      console.log('game added');
-      this.notificationService.warn('Game Added successfully!');
-      this.dialogRef.close();
-    }, error => console.error(error));
-}
+  //Function to add Game
+  onAdd(): void {
+    this._adminService.AddGame(this.gamename).subscribe(
+      result => {
+        console.log('game added');
+        this.notificationService.warn('Game Added successfully!');
+        this.dialogRef.close();
+      }, error => console.error(error));
+  }
 
 }

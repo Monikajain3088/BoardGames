@@ -1,16 +1,17 @@
-<form name="myForm">
-<p>
-  <b>Add Game:-</b>
-</p>
-<div>
-  <input  [(ngModel)]="gamename" type="text"  matInput placeholder="Game Name" ng-required="true">
-</div>
-<p>
 
-</p>
-<div class="button-row">
-  <button mat-raised-button color="primary" type="submit" (click)="onAdd()">Add</button>
-  <button mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
-</div>
-
-</form>
+<form name="myForm" #form="ngForm">
+    <p>
+    <b>Add Game:-</b>
+    </p>
+    <div>
+    <input name="input1" [(ngModel)]="gamename" type="text" matInput placeholder="Game Name" ng-required="true">
+    </div>
+    <p>
+    
+    </p>
+    <div class="button-row">
+    <button mat-raised-button color="primary" type="submit" (click)="onAdd()" name="btn1">Add</button>
+    <button mat-raised-button color="warn" (click)="onCancel()" name="btn2">Cancel</button>
+    </div>
+    
+    </form>
