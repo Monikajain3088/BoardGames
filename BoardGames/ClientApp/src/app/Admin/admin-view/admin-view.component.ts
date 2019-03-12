@@ -7,6 +7,7 @@ import { AdminService } from 'src/app/shared/admin.service';
 import { AdminvistordetailsComponent } from '../adminvistordetails/adminvistordetails.component';
 import { LoginService } from 'src/app/shared/login/login.service';
 import { Router } from '@angular/router';
+import { FormControl, FormGroup, Validators, FormBuilder  } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-view',
@@ -116,18 +117,25 @@ export class AdminViewComponent implements OnInit {
 })
 
 export class AddgameComponent {
-  constructor(private _adminService: AdminService, private notificationService: NotificationService,
+  constructor(private _adminService: AdminService, private formBuilder: FormBuilder, private notificationService: NotificationService,
     public dialogRef: MatDialogRef<AddgameComponent>
   ) { }
   public gamename = '';
+  AddGameForm: FormGroup;
+    submitted = false;
 
-  // Function to cancel the game
+  // Function to cancel the game - on click of cancel from dialog
   onCancel(): void {
     this.dialogRef.close();
   }
 
-  //Function to add Game
+  //Function to add Game  - on click of add from dialog
   onAdd(): void {
+    this.submitted = true;
+    // stop here if form is invalid
+    if (this.AddGameForm.invalid) {
+        return;
+    }
     this._adminService.AddGame(this.gamename).subscribe(
       result => {
         console.log('game added');
@@ -135,5 +143,13 @@ export class AddgameComponent {
         this.dialogRef.close();
       }, error => console.error(error));
   }
+
+  ngOnInit() {
+    this.AddGameForm = this.formBuilder.group({
+      gamename: ['', Validators.required]
+  });
+  }
+   // convenience getter for easy access to form fields
+   get f() { return this.AddGameForm.controls; }
 
 }

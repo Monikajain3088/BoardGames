@@ -1,34 +1,31 @@
-<p>
-  Welcome to Board Game Site!!!
-  <a *ngFor="let item of starList; let i=index " (click)="setStar(i)">  
-      <i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>   
-     </a>  
-    <br>  
-    Rating :- {{rating}} stars
-</p>
+<mat-toolbar color="accent">
+  <span class="title-center">Welcome to Board Games!</span>
 
-  
+</mat-toolbar>
+
+<div class="search-div"></div>
 <div class="mat-elevation-z8">
-  <mat-table [dataSource]="listData"  matSort>
+  <mat-table [dataSource]="listData" matSort>
     <ng-container matColumnDef="srno">
-      <mat-header-cell *matHeaderCellDef  mat-sort-header>Game ID</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Game ID</mat-header-cell>
       <mat-cell *matCellDef="let element">{{element.srno}}</mat-cell>
-    </ng-container> 
+    </ng-container>
     <ng-container matColumnDef="gameName">
-		  <mat-header-cell *matHeaderCellDef  mat-sort-header>Game Name</mat-header-cell>
-		  <mat-cell *matCellDef="let element">{{element.gameName}}</mat-cell>
-		</ng-container>
-		<ng-container matColumnDef="averageRating">
-		  <mat-header-cell *matHeaderCellDef mat-sort-header>Average Rating</mat-header-cell>
-		  <mat-cell *matCellDef="let element">{{element.averageRating}}</mat-cell>
-    </ng-container> 
+      <mat-header-cell *matHeaderCellDef mat-sort-header><b>Game Name</b></mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.gameName}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="averageRating">
+      <mat-header-cell *matHeaderCellDef mat-sort-header><b>Average Rating</b></mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.averageRating}}</mat-cell>
+    </ng-container>
     <ng-container matColumnDef="rating">
-		  <mat-header-cell *matHeaderCellDef mat-sort-header>User Rating</mat-header-cell>
-		  <mat-cell *matCellDef="let element" >
-        <a  *ngFor="let item of element.starList; let i=index " (click)="setStar(element,i)" >  
-          <i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>   
-         </a> </mat-cell>
-    </ng-container> 
+      <mat-header-cell *matHeaderCellDef mat-sort-header><b>Rating</b></mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <a *ngFor="let item of element.starList; let i=index " (click)="setStar(element,i)">
+          <i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
+        </a>
+      </mat-cell>
+    </ng-container>
     <ng-container matColumnDef="loading">
       <mat-footer-cell *matFooterCellDef colspan="6">
         Loading data...
@@ -39,10 +36,45 @@
         No data.
       </mat-footer-cell>
     </ng-container>
-    <mat-header-row *matHeaderRowDef="displayedColumns" ></mat-header-row>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="clickontg(row)"></mat-row>
     <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':listData!=null}"></mat-footer-row>
     <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(listData!=null && listData.data.length==0)}"></mat-footer-row>
   </mat-table>
-  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5"[showFirstLastButtons]="true" ></mat-paginator>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>
 </div>
+<p class="text-info">* Visitors can provide their ratings against each game and then fill their personal details and submit.</p>
+
+<div style="margin-top: 3%">
+  <form [formGroup]="visitorForm" class="form-inline mx-auto">
+    <div class="form-group col-md-3">
+      <label for="fname">First Name:</label>
+      <input type="text" formControlName="firstName" class="form-control" id="fname" placeholder="Enter First Name" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }">
+      <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+        <div *ngIf="f.firstName.errors.required">First Name is required</div>
+      </div>
+    </div>
+
+    <div class="form-group col-lg-3">
+      <label for="lname">Last Name:</label>
+      <input type="text" formControlName="lastName" class="form-control" id="lname" placeholder="Enter Last Name" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }">
+      <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+        <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+      </div>
+    </div>
+    <div class="form-group col-lg-3">
+      <label for="email">Email Address:</label>
+      <input type="email" formControlName="email" class="form-control" id="email" placeholder="Enter Email Address" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+      <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+        <div *ngIf="f.email.errors.required">Email is required</div>
+        <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+      </div>
+    </div>
+    <div class="form-group col-lg-3">
+      <label for="btn" style="color:white">Submit Rating:</label>
+      <button id="btn" mat-raised-button color="primary" type="submit" (click)="onSubmit()" name="btn1">Submit User Rating</button>
+    </div>
+  </form>
+</div>
+
+

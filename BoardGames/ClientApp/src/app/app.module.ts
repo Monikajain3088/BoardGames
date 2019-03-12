@@ -16,9 +16,6 @@ import { MatSortModule, MatPaginatorModule, MatToolbarModule, MatGridListModule,
   MatFormFieldModule, MatInputModule, MatRadioModule, MatSelectModule, MatCheckboxModule,
    MatDatepickerModule, MatNativeDateModule, MatButtonModule, MatSnackBarModule, MatIconModule, MatDialogModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { GamedashboardComponent } from './admin/gamedashboard/gamedashboard.component';
-//import { AddgameComponent } from './admin/addgame/addgame.component';
-//import { AdminViewComponent } from './admin/admin-view/admin-view.component';
 import {AdminvistordetailsComponent} from './Admin/adminvistordetails/adminvistordetails.component';
 import {AdminViewComponent, AddgameComponent } from './Admin/admin-view/admin-view.component'
 
@@ -33,7 +30,6 @@ import {AdminViewComponent, AddgameComponent } from './Admin/admin-view/admin-vi
     FetchDataComponent,
     VisitorRatingComponent,
     AdminViewComponent,
-    GamedashboardComponent,
     AdminvistordetailsComponent,
     AddgameComponent
     
@@ -62,7 +58,7 @@ import {AdminViewComponent, AddgameComponent } from './Admin/admin-view/admin-vi
     FormsModule,
 
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: '', component: VisitorRatingComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'visitor-rating', component: VisitorRatingComponent },

@@ -1,7 +1,7 @@
-<mat-toolbar layout-align="center" color="accent">Welcome to Board Games!</mat-toolbar>
+<mat-toolbar color="accent">  <span class="title-center">Welcome to Board Games!</span></mat-toolbar>
 <div class="search-div">
   <button mat-raised-button (click)="onCreate()">
-    <mat-icon>add</mat-icon>Add Game
+    <mat-icon>add</mat-icon>Create
   </button>
   <mat-form-field class="search-form-field" floatLabel="never">
     <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()">
@@ -15,7 +15,7 @@
   <mat-table [dataSource]="listData"  matSort>
     <ng-container matColumnDef="srno">
       <mat-header-cell *matHeaderCellDef  mat-sort-header><b>Sr No.</b></mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.srno}}</mat-cell>
+      <mat-cell *matCellDef="let element;">{{element.srno}}</mat-cell>
     </ng-container> 
     <ng-container matColumnDef="gameName">
 		  <mat-header-cell *matHeaderCellDef  mat-sort-header><b>Game Name</b></mat-header-cell>
@@ -23,8 +23,9 @@
 		</ng-container>
 		<ng-container matColumnDef="visitorCount" >
 		  <mat-header-cell *matHeaderCellDef mat-sort-header><b>Visitor Count</b></mat-header-cell>
-      <mat-cell *matCellDef="let element"><a style="color: rgb(0, 153, 255)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" (click)="GetVisitorInfo(element)"
-        ><u>{{ element.visitorCount }}</u></a></mat-cell>
+      <mat-cell *matCellDef="let element"><a (click)="GetVisitorInfo(element)" 
+        class="navbar-brand" style="color:skyblue">
+       <u> {{ element.visitorCount }}</u></a></mat-cell>
     </ng-container> 
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef><b>Actions</b></mat-header-cell>
@@ -42,7 +43,7 @@
         No data.
       </mat-footer-cell>
     </ng-container>
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-header-row *matHeaderRowDef="displayedColumns" ></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':listData!=null}"></mat-footer-row>
     <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(listData!=null && listData.data.length==0)}"></mat-footer-row>

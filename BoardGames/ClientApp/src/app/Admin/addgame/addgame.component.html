@@ -1,17 +1,20 @@
 
-<form name="myForm" #form="ngForm">
-    <p>
-    <b>Add Game:-</b>
-    </p>
-    <div>
-    <input name="input1" [(ngModel)]="gamename" type="text" matInput placeholder="Game Name" ng-required="true">
+ <form [formGroup]="AddGameForm" >
+    <p><b>Add Game:-</b></p>
+    <!-- <input matInput name="input1" [(ngModel)]="gamename" type="text"  placeholder="Game Name" 
+    ng-required="true"> -->
+    <div class="form-group">
+            <input type="text" formControlName="gamename" [(ngModel)]="gamename"
+            class="form-control" id="gamename" placeholder="Enter Game" 
+            [ngClass]="{ 'is-invalid': submitted && f.gamename.errors }">
+            <div *ngIf="submitted && f.gamename.errors" class="invalid-feedback">
+                <div *ngIf="f.gamename.errors.required">Game Name is required</div>
+            </div>
+     </div>
+    <p></p>
+
+    <div class="example-button-row">
+        <button mat-raised-button color="primary" type="submit" (click)="onAdd()" >Add</button>
+        <button mat-raised-button color="warn" (click)="onCancel()" >Cancel</button>
     </div>
-    <p>
-    
-    </p>
-    <div class="button-row">
-    <button mat-raised-button color="primary" type="submit" (click)="onAdd()" name="btn1">Add</button>
-    <button mat-raised-button color="warn" (click)="onCancel()" name="btn2">Cancel</button>
-    </div>
-    
-    </form>
+</form>
