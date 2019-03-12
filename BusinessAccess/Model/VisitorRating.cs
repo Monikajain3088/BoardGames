@@ -15,5 +15,27 @@ namespace BusinessAccess.Model
     {
         public string VisitorName { get; set; }
         public int? VisitorRating { get; set; }
+        public string Fname;
+        public string LName;
+        public string EmailId;
     }
+
+    //[JsonProperty("VistorRatingUpdate")]
+    public class VistorRatingUpdate
+    {
+        public List<UserGameSelectedRating> gamesRatings;
+        public NewVisitordetails VisitorInfo;
+    
+    }
+} public class NewVisitordetails
+{
+    public string Fname;
+    public string LName;
+    public string EmailId;
+}
+public class UserGameSelectedRating
+{
+    public int GameId { get; set; }
+    public int Rating { get; set; }
+
 }

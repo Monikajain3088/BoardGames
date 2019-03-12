@@ -127,6 +127,80 @@ namespace BusinessAccess
             }
 
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<GamesRating>> SaveUserGameRating (VistorRatingUpdate vistorRatingUpdate)
+        {
+            try
+            {
+                int VisitorId = 0;
+                int VisitorGameRatingId = 0;
+                string successMessage = string.Empty;
+                //Check New User exist in Databae ?
+                
+                IQueryable<Visitor> visitor = _Context.Visitor.Where(x => string.Equals(x.EmailId, vistorRatingUpdate.VisitorInfo.EmailId.Trim())
+                && string.Equals(x.Fname, vistorRatingUpdate.VisitorInfo.Fname)
+                && string.Equals(x.Lname, vistorRatingUpdate.VisitorInfo.LName));
+                if( visitor !=null && visitor.Count()>0)
+                {
+                    Parallel.ForEach(vistorRatingUpdate.gamesRatings, gameRating =>
+                    {
+                        IQueryable<VisitorGamesRating> visitorGamesRating = _Context.VisitorGamesRating.Where(x => x.GameId == gameRating.GameId && x.VisitorId == visitor.Select(y => y.VisitorId).FirstOrDefault());
+                        if (visitorGamesRating != null && visitorGamesRating.Count() > 0)
+                        {
+                           /// Visitor already has given rating angaist this game;
+                       }
+                        else
+                        {
+                            VisitorGamesRating visitorGamesRatings = new VisitorGamesRating()
+                            {
+                                VisitorId = visitor.Select(y => y.VisitorId).FirstOrDefault(),
+                                GameId = gameRating.GameId,
+                                Rating = gameRating.Rating
+                            };
+                            _Context.VisitorGamesRating.Add(visitorGamesRatings);
+                            _Context.SaveChanges();
+                        }
+                    });
+
+                }
+                else
+                {
+                    var newVisitor = new Visitor()
+                    {
+                        EmailId = vistorRatingUpdate.VisitorInfo.EmailId,
+                        Fname = vistorRatingUpdate.VisitorInfo.Fname,
+                        Lname = vistorRatingUpdate.VisitorInfo.LName,
+                    };
+                    _Context.Visitor.Add(newVisitor);
+                    _Context.SaveChanges();
+                    VisitorId = newVisitor.VisitorId;
+
+                    if(VisitorId > 0)
+                    {
+                        List<VisitorGamesRating> visitorGamesRatings = vistorRatingUpdate.gamesRatings.Select(x => new VisitorGamesRating()
+                        {
+                            VisitorId=VisitorId,
+                            GameId=x.GameId,
+                            Rating=x.Rating
+
+                        }).ToList();
+
+                        _Context.VisitorGamesRating.AddRange(visitorGamesRatings);
+                        _Context.SaveChanges();
+
+                    }
+                }
+
+                return  new List<GamesRating>();
+            }            
+            catch (Exception ex)
+            {
+                return new List<GamesRating>();
+            }
+        }
 
 
     }

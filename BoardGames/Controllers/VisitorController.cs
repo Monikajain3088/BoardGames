@@ -1,5 +1,8 @@
 ﻿using BusinessAccess;
+using BusinessAccess.Model;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 
 namespace BoardGames.Controllers
@@ -32,9 +35,20 @@ namespace BoardGames.Controllers
 
         // POST: api/Visitor
         [HttpPost]
-        public void Post([FromBody] string value)
+        [Route("saveUserGameRating")]
+        public async Task<IActionResult> SaveUserGameRating([FromBody] JObject vistorRatingUpdate)
         {
+            try
+            {
+               
+                VistorRatingUpdate _vistorRatingUpdate = JsonConvert.DeserializeObject<VistorRatingUpdate>(vistorRatingUpdate.ToString());
+                return Ok(await boardGamesRepository.SaveUserGameRating(_vistorRatingUpdate));
 
+            }
+            catch 
+            {
+                return BadRequest();
+            }
         }
     }
 }

@@ -9,6 +9,7 @@ import { map, catchError } from 'rxjs/operators';
 
 
 const endpoint = 'https://localhost:44341/api/Auth/GenerateToken';
+
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json'

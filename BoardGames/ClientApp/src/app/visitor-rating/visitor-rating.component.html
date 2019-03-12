@@ -1,27 +1,29 @@
 <mat-toolbar color="accent">
-  <span class="title-center">Welcome to Board Games!</span>
-
-</mat-toolbar>
-
-<div class="search-div"></div>
+    <span class="title-center">Welcome to Board Games!</span>  
+  </mat-toolbar>
+  <div class="search-div"></div>
 <div class="mat-elevation-z8">
   <mat-table [dataSource]="listData" matSort>
     <ng-container matColumnDef="srno">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Game ID</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Sr. No.</mat-header-cell>
       <mat-cell *matCellDef="let element">{{element.srno}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="gameName">
       <mat-header-cell *matHeaderCellDef mat-sort-header><b>Game Name</b></mat-header-cell>
       <mat-cell *matCellDef="let element">{{element.gameName}}</mat-cell>
     </ng-container>
-    <ng-container matColumnDef="averageRating">
+    <ng-container matColumnDef="AvgStars">
       <mat-header-cell *matHeaderCellDef mat-sort-header><b>Average Rating</b></mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.averageRating}}</mat-cell>
+      <mat-cell *matCellDef="let element">
+        <a *ngFor="let item of element.AvgStars;">
+          <i class="fa" style="color:green" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
+        </a>
+      </mat-cell>
     </ng-container>
     <ng-container matColumnDef="rating">
       <mat-header-cell *matHeaderCellDef mat-sort-header><b>Rating</b></mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <a *ngFor="let item of element.starList; let i=index " (click)="setStar(element,i)">
+      <mat-cell *matCellDef="let element let i=index ">
+        <a *ngFor="let item of element.stars; let i=index " (click)="setStar(element,i)">
           <i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
         </a>
       </mat-cell>
@@ -37,7 +39,7 @@
       </mat-footer-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="clickontg(row)"></mat-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':listData!=null}"></mat-footer-row>
     <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(listData!=null && listData.data.length==0)}"></mat-footer-row>
   </mat-table>
@@ -76,5 +78,4 @@
     </div>
   </form>
 </div>
-
 
