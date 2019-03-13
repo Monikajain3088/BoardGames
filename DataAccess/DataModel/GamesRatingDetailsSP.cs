@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DataAccess.DataModel
 {
+    //Class for getting visitors rating via stored procedure
     public class GamesRatingDetailsSP
     {
-
         [Key]
         public int GameId { get; set; }
         public string GameName { get; set; }

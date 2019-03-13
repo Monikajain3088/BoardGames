@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace DataAccess.DataModel
 {
+    // User details
     public partial class User
     {
         public int UserId { get; set; }

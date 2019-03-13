@@ -5,6 +5,7 @@ namespace DataAccess.DataModel
 {
     public partial class Visitor
     {
+        // Visitor details - DB class
         public Visitor()
         {
             VisitorGamesRating = new HashSet<VisitorGamesRating>();

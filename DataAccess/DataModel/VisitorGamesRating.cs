@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace DataAccess.DataModel
 {
+    // Class for Visitor and given game ratings
     public partial class VisitorGamesRating
     {
         public int VisitorRatingId { get; set; }
