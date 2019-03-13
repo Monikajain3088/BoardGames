@@ -18,18 +18,20 @@ export class VisitorRatingComponent implements OnInit {
 
   }
   visitorForm: FormGroup;
+  SubmitResponse:FormGroup;
   submitted = false;
-
+  public gameList: any;
   public starList: boolean[] = [true, true, true, true, true];
   public rating: number;
+  public saveUserRatingResponse:any;
+  public saveUserGameRatingResponseFlag=false;
   public listData: MatTableDataSource<any>;
   public displayedColumns: string[] = ['srno', 'gameName', 'AvgStars', 'rating'];
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   searchKey: string;
 
-public LoadDatatable()
-{
+public LoadDatatable() {
   this._gameService.getGameList().subscribe(
     result => {
       let i = 1;
@@ -53,7 +55,7 @@ public LoadDatatable()
     , error => console.error(error));
 }
 
-  public gameList: any;
+
   ngOnInit() {
     this.visitorForm = this.formBuilder.group({
       firstName: ['', Validators.required],
@@ -83,18 +85,18 @@ public LoadDatatable()
   }
 
   // tslint:disable-next-line: member-ordering
-  public UserGamesRating: any[] = [];
+
   // convenience getter for easy access to form fields
   get f() { return this.visitorForm.controls; }
   public onSubmit() {
+  const  UserGamesRating: any[] = [];
     this.submitted = true;
-
     // stop here if form is invalid
     if (this.visitorForm.invalid) {
       return;
     }
     let userRating = 0;
-    // tslint:disable-next-line: no-shadowed-variable
+       // tslint:disable-next-line: no-shadowed-variable
     this.listData.data.forEach(element => {
 
       userRating = element.stars.filter(value => value == false).length;
@@ -102,20 +104,24 @@ public LoadDatatable()
         const GamesRating = {
           'GameId': element.gameId,
           'Rating': userRating,
+          'GameName': element.gameName
         };
-        this.UserGamesRating.push(GamesRating);
+        UserGamesRating.push(GamesRating);
       }
     });
     const VistorRatingUpdate = {
-      'gamesRatings': this.UserGamesRating,
+      'gamesRatings': UserGamesRating,
       'VisitorInfo':
       {
-        'EmailId': 'monika.jain@gmail.com',
-        'Fname': 'Suresh',
-        'LName': 'Jain',
+        'EmailId': this.visitorForm.value.email,
+        'Fname': this.visitorForm.value.firstName,
+        'LName': this.visitorForm.value.lastName,
       }
     };
-    this._gameService.saveUserGameRating(VistorRatingUpdate).subscribe(res => {
+ this._gameService.saveUserGameRating(VistorRatingUpdate).subscribe(res => {
+ this.saveUserRatingResponse = res;
+ this.saveUserGameRatingResponseFlag=true;
+ console.log(JSON.stringify(this.saveUserRatingResponse));
       console.log('User rating got saved');
       this.LoadDatatable();
     }

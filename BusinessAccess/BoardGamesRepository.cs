@@ -131,27 +131,37 @@ namespace BusinessAccess
         /// 
         /// </summary>
         /// <returns></returns>
-        public async Task<List<GamesRating>> SaveUserGameRating (VistorRatingUpdate vistorRatingUpdate)
+        public async Task<List<SaveGameRatingResponse>> SaveUserGameRating (VistorRatingUpdate vistorRatingUpdate)
         {
+            List<SaveGameRatingResponse> saveGameRatingResponse = new List<SaveGameRatingResponse>();
             try
             {
+               
                 int VisitorId = 0;
-                int VisitorGameRatingId = 0;
-                string successMessage = string.Empty;
-                //Check New User exist in Databae ?
-                
-                IQueryable<Visitor> visitor = _Context.Visitor.Where(x => string.Equals(x.EmailId, vistorRatingUpdate.VisitorInfo.EmailId.Trim())
+
+                //Check New User exist in Database ?                
+                IQueryable<Visitor> visitor =_Context.Visitor.Where(x => string.Equals(x.EmailId, vistorRatingUpdate.VisitorInfo.EmailId.Trim())
                 && string.Equals(x.Fname, vistorRatingUpdate.VisitorInfo.Fname)
                 && string.Equals(x.Lname, vistorRatingUpdate.VisitorInfo.LName));
-                if( visitor !=null && visitor.Count()>0)
+                if( visitor !=null && visitor.Count()>0)  /////If visitor exist in database then 
                 {
-                    Parallel.ForEach(vistorRatingUpdate.gamesRatings, gameRating =>
+                    
+                   foreach (var gameRating in  vistorRatingUpdate.gamesRatings)
                     {
-                        IQueryable<VisitorGamesRating> visitorGamesRating = _Context.VisitorGamesRating.Where(x => x.GameId == gameRating.GameId && x.VisitorId == visitor.Select(y => y.VisitorId).FirstOrDefault());
-                        if (visitorGamesRating != null && visitorGamesRating.Count() > 0)
+                        IQueryable<VisitorGamesRating> visitorGamesRating = _Context.VisitorGamesRating
+                        .Where(x => x.GameId == gameRating.GameId && x.VisitorId == visitor.Select(y => y.VisitorId).FirstOrDefault());
+
+                        if (visitorGamesRating != null && visitorGamesRating.Count() > 0)  /// Visitor already has given rating angaist this game;
                         {
-                           /// Visitor already has given rating angaist this game;
-                       }
+                            saveGameRatingResponse.Add(
+                                new SaveGameRatingResponse()
+                                {
+                                    GameName = gameRating.GameName,
+                                    UserGameRating = gameRating.Rating,
+                                    Message = "Rating exist for this visitor"
+
+                                });
+                        }
                         else
                         {
                             VisitorGamesRating visitorGamesRatings = new VisitorGamesRating()
@@ -162,8 +172,17 @@ namespace BusinessAccess
                             };
                             _Context.VisitorGamesRating.Add(visitorGamesRatings);
                             _Context.SaveChanges();
+
+                            saveGameRatingResponse.Add(
+                               new SaveGameRatingResponse()
+                               {
+                                   GameName = gameRating.GameName,
+                                   UserGameRating = gameRating.Rating,
+                                   Message = "Successfully saved !"
+
+                               });
                         }
-                    });
+                    };  /// Loop end
 
                 }
                 else
@@ -191,14 +210,22 @@ namespace BusinessAccess
                         _Context.VisitorGamesRating.AddRange(visitorGamesRatings);
                         _Context.SaveChanges();
 
+                        saveGameRatingResponse = vistorRatingUpdate.gamesRatings.Select(x => new SaveGameRatingResponse()
+                        {
+                            GameName = x.GameName,
+                            UserGameRating = x.Rating,
+                            Message = "Successfully saved !"
+
+                        }).ToList();
+
                     }
                 }
 
-                return  new List<GamesRating>();
+                return saveGameRatingResponse;
             }            
             catch (Exception ex)
             {
-                return new List<GamesRating>();
+                return saveGameRatingResponse;
             }
         }
 

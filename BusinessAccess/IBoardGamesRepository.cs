@@ -23,6 +23,6 @@ namespace BusinessAccess
 
         bool IsValidUser(LoginView userCredetials);
 
-         Task<List<GamesRating>> SaveUserGameRating(VistorRatingUpdate vistorRatingUpdate);
+         Task<List<SaveGameRatingResponse>> SaveUserGameRating(VistorRatingUpdate vistorRatingUpdate);
     }
 }

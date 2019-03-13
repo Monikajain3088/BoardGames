@@ -36,6 +36,7 @@ namespace BusinessAccess.Model
 public class UserGameSelectedRating
 {
     public int GameId { get; set; }
+    public string GameName { get; set; }
     public int Rating { get; set; }
 
 }
