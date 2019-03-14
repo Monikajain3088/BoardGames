@@ -5,7 +5,7 @@ import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms'
 import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
 import { element } from '@angular/core/src/render3/instructions';
 import { Router } from '@angular/router';
-
+import { NotificationService } from 'src/app/shared/alert/notification.service';
 
 @Component({
   selector: 'app-visitor-rating',
@@ -14,17 +14,17 @@ import { Router } from '@angular/router';
 })
 export class VisitorRatingComponent implements OnInit {
 
-  constructor(private _gameService: GameService, public router: Router, private formBuilder: FormBuilder) {
-
-  }
+  constructor(private _gameService: GameService, public router: Router, private formBuilder: FormBuilder
+    , private notificationService: NotificationService
+    ) { }
   visitorForm: FormGroup;
-  SubmitResponse:FormGroup;
+  SubmitResponse: FormGroup;
   submitted = false;
   public gameList: any;
   public starList: boolean[] = [true, true, true, true, true];
   public rating: number;
-  public saveUserRatingResponse:any;
-  public saveUserGameRatingResponseFlag=false;
+  public saveUserRatingResponse: any;
+  public saveUserGameRatingResponseFlag = false;
   public listData: MatTableDataSource<any>;
   public displayedColumns: string[] = ['srno', 'gameName', 'AvgStars', 'rating'];
   @ViewChild(MatSort) sort: MatSort;
@@ -118,11 +118,17 @@ public LoadDatatable() {
         'LName': this.visitorForm.value.lastName,
       }
     };
+    if (UserGamesRating.length==0)
+    {
+      this.notificationService.warn('Rate atleast one Game !');
+      return;
+    }
  this._gameService.saveUserGameRating(VistorRatingUpdate).subscribe(res => {
  this.saveUserRatingResponse = res;
- this.saveUserGameRatingResponseFlag=true;
+ this.saveUserGameRatingResponseFlag = true;
  console.log(JSON.stringify(this.saveUserRatingResponse));
       console.log('User rating got saved');
+     /// this.notificationService.warn('Rate successful done !');
       this.LoadDatatable();
     }
     );

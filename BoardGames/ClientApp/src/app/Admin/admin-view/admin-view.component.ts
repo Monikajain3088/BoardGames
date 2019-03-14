@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
-import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 //import { AddgameComponent } from '../addgame/addgame.component';
 import { NotificationService } from 'src/app/shared/alert/notification.service';
 import { AdminService } from 'src/app/shared/admin.service';
@@ -37,8 +37,9 @@ export class AdminViewComponent implements OnInit {
     this._adminService.GetVisitorGamesRatingDetails().subscribe(
       result => {
         this.gameList = result;
-        let i: number = 1;
+        let i = 1;
         this.gameList.forEach(element => {
+          element.visitorExistsFlag = element.visitorCount > 0 ? true : false;
           element.srno = i;
           i = i + 1;
         });
@@ -54,8 +55,7 @@ export class AdminViewComponent implements OnInit {
   ngOnInit() {
     if (!this.loginService.isLoggedIn) {
       this.router.navigate(['/visitor-rating']);
-    }
-    else {
+    } else {
       this.LoadGameTable();
     }
 
@@ -63,7 +63,7 @@ export class AdminViewComponent implements OnInit {
 
   // Function to clear serach item
   onSearchClear() {
-    this.searchKey = "";
+    this.searchKey = '';
     this.applyFilter();
   }
 
@@ -76,9 +76,7 @@ export class AdminViewComponent implements OnInit {
   // Function to call Add Game DialogBox Component- fires on click of "+Add Game"
   onCreate() {
     const dialogRef = this.dialog.open(AddgameComponent, {
-      width: "20%"
-      //data: {name: "test"}
-    });
+      width: '20%'});
 
     // Refresh the Game Table
     dialogRef.afterClosed().subscribe(result => {
@@ -105,7 +103,7 @@ export class AdminViewComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = "40%";
+    dialogConfig.width = '40%';
     this.dialog.open(AdminvistordetailsComponent, dialogConfig);
   }
 }
@@ -139,7 +137,7 @@ export class AddgameComponent {
     this._adminService.AddGame(this.gamename).subscribe(
       result => {
         console.log('game added');
-        this.notificationService.warn('Game Added successfully!');
+        this.notificationService.success('Game Added successfully!');
         this.dialogRef.close();
       }, error => console.error(error));
   }

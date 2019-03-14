@@ -1,14 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
 import { throwError, Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
-
-
-
-
-const endpoint = 'https://localhost:44341/api/Auth/GenerateToken';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -19,11 +14,12 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class LoginService {
-
-  constructor(private http: HttpClient) {}
+  
+  constructor(private http: HttpClient, @Inject('BASE_URL') public baseUrl: string) {}
   accessToken: string;
   currentUser: string = null;
   redirectUrl: string;
+  public endpoint = this.baseUrl+ '/api/Auth/GenerateToken';
  public get isLoggedIn(): boolean {
     if (localStorage.getItem('userName') == null) {
        return false;
@@ -58,7 +54,7 @@ public LoginIn(userName: string, password: string): Observable<TokenParams> {
     Password: password
 };
 
-return this.http.post(endpoint, credentials, httpOptions).pipe(map(res => this.setSession(res, userName)),
+return this.http.post(this.endpoint, credentials, httpOptions).pipe(map(res => this.setSession (res, userName)),
 catchError( this.handleError<any>('Login'))
 );
 }

@@ -12,7 +12,18 @@
   form.normal-form{
     margin: 10px;
 }
+.mat-header-cell{
+    background-color:rgb(193, 197, 197);
+    font-weight: bold;
+    }
 
+.mat-row:nth-child(even){
+    background-color: rgb(204, 235, 216);
+    }
+
+.mat-row:nth-child(odd){
+    background-color:rgb(224, 241, 241);
+    }
 .controles-container{
     width: 100%;
     padding: 5%;    

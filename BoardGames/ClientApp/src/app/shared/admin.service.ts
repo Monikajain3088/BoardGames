@@ -17,7 +17,7 @@ set rowData(theBar:any) {
   constructor(public http: HttpClient, @Inject('BASE_URL') public baseUrl: string) { }
 
   public GetVisitorGamesRatingDetails() {
-    return this.http.get<VisitorGameCollection[]>('https://localhost:44341/' + 'api/Admin/GamesVisitorRatings');
+    return this.http.get<VisitorGameCollection[]>(this.baseUrl + 'api/Admin/GamesVisitorRatings');
  }
 
  // Add Game on click og "+Add Game"
@@ -27,12 +27,12 @@ set rowData(theBar:any) {
     GameName: GameName,
     CreatedBy: "Admin"
   }
-  return this.http.post<any>('https://localhost:44341/' + 'api/Admin/AddGame', body, {
+  return this.http.post<any>(this.baseUrl + 'api/Admin/AddGame', body, {
     headers});
 }
  
  public DeleteGame(GameId: number) {
-  return this.http.delete<any>('https://localhost:44341/' + 'api/Admin/DeleteGame?gameId='+GameId);
+  return this.http.delete<any>(this.baseUrl + 'api/Admin/DeleteGame?gameId='+GameId);
 }
 }
 

@@ -31,7 +31,7 @@ namespace BoardGames.Controllers
         {
             if (LoginInfo == null)
             {
-                return BadRequest("Invalid client request");
+                return BadRequest("Invalid login request");
             }
 
             if (boardGamesRepository.IsValidUser(LoginInfo))
@@ -42,7 +42,7 @@ namespace BoardGames.Controllers
                 var tokeOptions = new JwtSecurityToken(
                     issuer: Configuration["JwtSecurityToken:Issuer"],
                     audience: Configuration["JwtSecurityToken:Audience"],
-                    claims: new List<Claim>(),
+                    claims: new List<Claim>(), //we can set from  user identity
                     expires: DateTime.Now.AddMinutes(5),
                     signingCredentials: signinCredentials
                 );

@@ -23,9 +23,13 @@
 		</ng-container>
 		<ng-container matColumnDef="visitorCount" >
 		  <mat-header-cell *matHeaderCellDef mat-sort-header><b>Visitor Count</b></mat-header-cell>
-      <mat-cell *matCellDef="let element"><a (click)="GetVisitorInfo(element)" 
+      <mat-cell *matCellDef="let element"><a *ngIf="element.visitorExistsFlag" (click)="GetVisitorInfo(element)" 
         class="navbar-brand" style="color:skyblue">
-       <u> {{ element.visitorCount }}</u></a></mat-cell>
+       <u> {{ element.visitorCount }}</u></a>
+       <div  *ngIf="!element.visitorExistsFlag" 
+        class="navbar-brand" style="color:skyblue">
+        {{ element.visitorCount }}</div>
+      </mat-cell>
     </ng-container> 
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef><b>Actions</b></mat-header-cell>

@@ -20,10 +20,10 @@ export class GameService {
 
   }
  public getGameList() {
-     return this.http.get<Game[]>('https://localhost:44341/' + 'api/Visitor/GetGamesRatings');
+     return this.http.get<Game[]>(this.baseUrl + 'api/Visitor/GetGamesRatings');
   }
   public saveUserGameRating(VistorRatingUpdate) : Observable<any> {
-    return this.http.post<any>('https://localhost:44341/' + 'api/Visitor/saveUserGameRating',VistorRatingUpdate,httpOptions)
+    return this.http.post<any>(this.baseUrl  + 'api/Visitor/saveUserGameRating',VistorRatingUpdate,httpOptions)
     .pipe(map(res => res),
     catchError( this.handleError<any>('visitor'))
     );

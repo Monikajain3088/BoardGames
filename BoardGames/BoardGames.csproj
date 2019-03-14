@@ -10,6 +10,7 @@
 
     <!-- Set this to true if you enable server-side prerendering -->
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
+    <UserSecretsId>782a652f-0717-42b9-8f9d-da0dae4374d8</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
