@@ -53,9 +53,7 @@ namespace BusinessAccess
         {
             try
             {
-                var nt = _Context.GameVisitorRaingDetailsSP
-                            .FromSql("Exec dbo.[GetVisitorGameRatingDetails]").GroupBy(x => x.GameId).ToList();
-
+             
                 return await _Context.GameVisitorRaingDetailsSP
                             .FromSql("Exec dbo.[GetVisitorGameRatingDetails]").GroupBy(x => x.GameId)
                             .Select(y => new VisitorRating()
@@ -63,13 +61,13 @@ namespace BusinessAccess
                                 GameId = y.Key,
                                 GameName = y.Select(x => x.GameName).FirstOrDefault(),
                                 VisitorCount =  y.Where(x => x.VisitorName!=null).Count(),
-                                Visitors = y.Where(i=>!string.IsNullOrEmpty(i.VisitorName)).Select( z=>
+                                Visitors = y.Select( z=>
                                 new VisitorInfo()
                                 {
                                     VisitorName = z.VisitorName,
                                     VisitorRating = z.Rating
                                 }
-                                 ).ToList()
+                                 ).Where(i => !string.IsNullOrEmpty(i.VisitorName)).ToList()
                             }).ToListAsync();
 
                
