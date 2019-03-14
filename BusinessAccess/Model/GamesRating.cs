@@ -4,6 +4,7 @@ using System.Text;
 
 namespace BusinessAccess.Model
 {
+    //model view to show Visitor page grid
   public  class GamesRating
     {
         public int GameId { get; set; }

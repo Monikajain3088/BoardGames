@@ -1,7 +1,7 @@
 <mat-toolbar color="accent">
-    <span class="title-center">Hi Visitor,  Welcome to Board Games !</span>  
-  </mat-toolbar>
-  <div class="search-div"></div>
+  <span class="title-center">Hi Visitor,  Welcome to Board Games !</span>
+</mat-toolbar>
+<div class="search-div"></div>
 <div class="mat-elevation-z8">
   <mat-table [dataSource]="listData" matSort>
     <ng-container matColumnDef="srno">
@@ -21,7 +21,7 @@
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="rating">
-      <mat-header-cell *matHeaderCellDef mat-sort-header><b>Rating</b></mat-header-cell>
+      <mat-header-cell *matHeaderCellDef><b>Rating</b></mat-header-cell>
       <mat-cell *matCellDef="let element let i=index ">
         <a *ngFor="let item of element.stars; let i=index " (click)="setStar(element,i)">
           <i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
@@ -48,7 +48,7 @@
 <p class="text-info">* Visitors can provide their ratings against each game and then fill their personal details and submit.</p>
 
 <div style="margin-top: 3%">
-  <form [formGroup]="visitorForm" >
+  <form [formGroup]="visitorForm">
     <div class="form-group row">
       <div class="col-md-3">
         <label for="fname"><b>*First Name:</b></label>
@@ -81,17 +81,17 @@
   </form>
 </div>
 
-<div  style="margin-top: 3%">
- 
-        <span *ngFor="let i of saveUserRatingResponse">
-          <!-- <br/>
-        
-         Game Name: {{i.gameName}} , Messagee: {{i.message}} -->
-         <div class="row">
-            <div class="col-md-3"><b>Game Name:</b>  {{i.gameName}}</div>  
-            <div class="col-md-4"><b>Messagee:</b>  {{i.message}}</div>          
-          </div>
-        
-        </span>
-      
+<div style="margin-top: 3%">
+
+  <span *ngFor="let i of saveUserRatingResponse">
+    <!-- <br/>
+
+    Game Name: {{i.gameName}} , Messagee: {{i.message}} -->
+    <div class="row">
+      <div class="col-md-3"><b>Game Name:</b>  {{i.gameName}}</div>
+      <div class="col-md-4"><b>Messagee:</b>  {{i.message}}</div>
     </div>
+
+  </span>
+
+</div>

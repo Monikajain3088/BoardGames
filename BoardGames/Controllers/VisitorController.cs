@@ -11,12 +11,14 @@ namespace BoardGames.Controllers
     [ApiController]
     public class VisitorController : ControllerBase
     {
+        //DI
         private readonly IBoardGamesRepository boardGamesRepository;
         public VisitorController(IBoardGamesRepository _boardGamesRepository)
         {
             boardGamesRepository = _boardGamesRepository;
         }
 
+        // Get method to get visitor details
         // GET: api/Visitor
         [HttpGet]
         [Route("GetGamesRatings")]
@@ -33,6 +35,7 @@ namespace BoardGames.Controllers
             }
         }
 
+        // Post methid to save visitor data with rating in to DB
         // POST: api/Visitor
         [HttpPost]
         [Route("saveUserGameRating")]

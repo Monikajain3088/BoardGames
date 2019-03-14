@@ -4,20 +4,17 @@ using System.Text;
 
 namespace BusinessAccess.Model
 {
+    //get visitor rating view: admin
    public class VisitorRating: GamesRating
     {
-        //public int? Rating { get; set; }
-       // public int VisitorCount { get; set; }
        public int VisitorCount { get; set; }
         public List<VisitorInfo> Visitors { get; set; }
     }
-    public class VisitorInfo
+    //get visitor rating view: admin
+    public class VisitorInfo: NewVisitordetails
     {
         public string VisitorName { get; set; }
         public int? VisitorRating { get; set; }
-        public string Fname;
-        public string LName;
-        public string EmailId;
     }
 
     //[JsonProperty("VistorRatingUpdate")]

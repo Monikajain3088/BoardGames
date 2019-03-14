@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.DataModel
 {
-    //Class for getting visitors rating via stored procedure
+    //Class for getting visitors rating via stored procedure for visitor
     public class GamesRatingDetailsSP
     {
         [Key]

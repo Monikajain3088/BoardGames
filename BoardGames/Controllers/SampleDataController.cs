@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BoardGames.Controllers
 {
+    // not in use for this applicaion
     [Route("api/[controller]")]
     public class SampleDataController : Controller
     {

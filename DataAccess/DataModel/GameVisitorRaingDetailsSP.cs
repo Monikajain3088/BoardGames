@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DataAccess.DataModel
 {
-    // //Class for getting visitors rating details via stored procedure for Admin
+    //Class for getting visitors rating details via stored procedure for Admin
     public class GameVisitorRaingDetailsSP
     {
         [Key]

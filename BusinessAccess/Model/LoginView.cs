@@ -8,11 +8,6 @@ namespace BusinessAccess.Model
 {
     public class LoginView
     {
-        //[Required]
-        //[EmailAddress]
-        //[Display(Name = "Email")]
-        //public string EmailId { get; set; }
-
         [Required]
         [Display(Name = "LoginId")]
         public string LoginId { get; set; }

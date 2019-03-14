@@ -4,6 +4,7 @@ using System.Text;
 
 namespace BusinessAccess.Model
 {
+    // Response class for visitor rating against game and with message
     public class SaveGameRatingResponse
     {
         public string GameName { get; set; }

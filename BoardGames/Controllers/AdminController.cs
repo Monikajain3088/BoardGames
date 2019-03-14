@@ -10,6 +10,7 @@ namespace BoardGames.Controllers
     [ApiController]
     public class AdminController : ControllerBase
     {
+        //DI 
         private readonly IBoardGamesRepository boardGamesRepository;
         public AdminController(IBoardGamesRepository _boardGamesRepository)
         {
