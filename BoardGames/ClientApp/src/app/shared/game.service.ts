@@ -12,16 +12,19 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-
+  // class for visitor functionlaity
 export class GameService {
   public game: Game[];
 
   constructor(public http: HttpClient, @Inject('BASE_URL') public baseUrl: string) {
 
   }
+  // get game name and its average rating
  public getGameList() {
      return this.http.get<Game[]>(this.baseUrl + 'api/Visitor/GetGamesRatings');
   }
+
+  // Save visitor data into database
   public saveUserGameRating(VistorRatingUpdate) : Observable<any> {
     return this.http.post<any>(this.baseUrl  + 'api/Visitor/saveUserGameRating',VistorRatingUpdate,httpOptions)
     .pipe(map(res => res),

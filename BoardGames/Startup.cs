@@ -1,18 +1,16 @@
+using BusinessAccess;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Swashbuckle.AspNetCore.Swagger;
-using BusinessAccess;
-using DataAccessr;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
+using Swashbuckle.AspNetCore.Swagger;
 using System;
+using System.Text;
 
 namespace BoardGames
 {
@@ -43,11 +41,11 @@ namespace BoardGames
             });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             // Add connection string config
-            services.AddDbContext<BoardGamesContext>(item => item.UseSqlServer(Configuration.GetConnectionString("BoardGamesDBConnection")));
+            services.AddDbContext<DataAccessr.BoardGamesContext>(item => item.UseSqlServer(Configuration.GetConnectionString("BoardGamesDBConnection")));
             // add DI Pattern
             services.AddScoped<IBoardGamesRepository, BoardGamesRepository>();
             // In production, the Angular files will be served from this directory
-   
+
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
@@ -55,7 +53,7 @@ namespace BoardGames
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(Options =>
             {
                 Options.RequireHttpsMetadata = false;
-
+                // token authentication
                 Options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,

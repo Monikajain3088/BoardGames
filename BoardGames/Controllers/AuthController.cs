@@ -26,6 +26,7 @@ namespace BoardGames.Controllers
             Configuration = configuration;
         }
 
+        // Method to generate te taoken for authentication
         [HttpPost, Route("GenerateToken")]
         public IActionResult CreateTokenAsync([FromBody]LoginView LoginInfo)
         {

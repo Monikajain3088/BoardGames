@@ -12,6 +12,7 @@ import { NotificationService } from 'src/app/shared/alert/notification.service';
   templateUrl: './visitor-rating.component.html',
   styleUrls: ['./visitor-rating.component.css']
 })
+  // class for visitor rating
 export class VisitorRatingComponent implements OnInit {
 
   constructor(private _gameService: GameService, public router: Router, private formBuilder: FormBuilder
@@ -31,6 +32,7 @@ export class VisitorRatingComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   searchKey: string;
 
+  // method to load data into table
 public LoadDatatable() {
   this._gameService.getGameList().subscribe(
     result => {
@@ -55,7 +57,6 @@ public LoadDatatable() {
     , error => console.error(error));
 }
 
-
   ngOnInit() {
     this.visitorForm = this.formBuilder.group({
       firstName: ['', Validators.required],
@@ -65,6 +66,7 @@ public LoadDatatable() {
    this.LoadDatatable();
   }
 
+  // method to set star(rating)
   public setStar(record: any, data: any) {
     // tslint:disable-next-line: no-shadowed-variable
     this.listData.data.forEach(element => {
@@ -83,9 +85,6 @@ public LoadDatatable() {
 
     });
   }
-
-  // tslint:disable-next-line: member-ordering
-
   // convenience getter for easy access to form fields
   get f() { return this.visitorForm.controls; }
   public onSubmit() {
@@ -96,7 +95,6 @@ public LoadDatatable() {
       return;
     }
     let userRating = 0;
-       // tslint:disable-next-line: no-shadowed-variable
     this.listData.data.forEach(element => {
 
       userRating = element.stars.filter(value => value == false).length;
