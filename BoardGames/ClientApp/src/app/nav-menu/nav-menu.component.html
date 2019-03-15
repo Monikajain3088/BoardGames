@@ -10,7 +10,7 @@
             <div class="col-md-2  ">
             </div>
             <div class="col-md-3 ">
-              <input type="text" formControlName="UsrId" [(ngModel)]="UserId"
+              <input type="text" formControlName="UsrId" maxlength="25"  [(ngModel)]="UserId"
                      class="form-control" id="UsrId" placeholder="Admin User Name"
                      [ngClass]="{ 'is-invalid': submitted && f.UsrId.errors }">
               <div *ngIf="submitted && f.UsrId.errors" class="invalid-feedback">
@@ -20,7 +20,7 @@
             </div>
             <div class="col-md-1"></div>
             <div class="col-md-3">
-              <input type="password" [(ngModel)]="Password" formControlName="Password" class="form-control" id="Password" placeholder="Admin Password"
+              <input type="password" [(ngModel)]="Password" maxlength="25"  formControlName="Password" class="form-control" id="Password" placeholder="Admin Password"
                      [ngClass]="{ 'is-invalid': submitted && f.Password.errors }">
               <div *ngIf="submitted && f.Password.errors" class="invalid-feedback">
                 <div *ngIf="f.Password.errors.required">Password is required</div>

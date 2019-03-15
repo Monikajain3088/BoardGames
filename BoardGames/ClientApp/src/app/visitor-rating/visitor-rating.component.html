@@ -52,7 +52,7 @@
     <div class="form-group row">
       <div class="col-md-3">
         <label for="fname"><b>*First Name:</b></label>
-        <input type="text" formControlName="firstName" class="form-control" id="fname" placeholder="Enter First Name" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }">
+        <input type="text" formControlName="firstName" maxlength="25" class="form-control" id="fname" placeholder="Enter First Name" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }">
         <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
           <div *ngIf="f.firstName.errors.required">First Name is required</div>
         </div>
@@ -60,14 +60,14 @@
 
       <div class="col-md-3">
         <label for="lname"><b>*Last Name:</b></label>
-        <input type="text" formControlName="lastName" class="form-control" id="lname" placeholder="Enter Last Name" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }">
+        <input type="text" formControlName="lastName" maxlength="25"  class="form-control" id="lname" placeholder="Enter Last Name" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }">
         <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
           <div *ngIf="f.lastName.errors.required">Last Name is required</div>
         </div>
       </div>
       <div class="col-md-3">
         <label for="email"><b>*Email Id:</b></label>
-        <input type="email" formControlName="email" class="form-control" id="email" placeholder="Enter Email Id" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+        <input type="email" formControlName="email" maxlength="25"  class="form-control" id="email" placeholder="Enter Email Id" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
         <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
           <div *ngIf="f.email.errors.required">Email is required</div>
           <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
