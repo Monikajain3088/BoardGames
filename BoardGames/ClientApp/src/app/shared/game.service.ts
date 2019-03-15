@@ -21,7 +21,7 @@ export class GameService {
   }
   // get game name and its average rating
  public getGameList() {
-     return this.http.get<Game[]>(this.baseUrl + 'api/Visitor/GetGamesRatings');
+     return this.http.get<Game[]>('https://localhost:44341/' + 'api/Visitor/GetGamesRatings');
   }
 
   // Save visitor data into database

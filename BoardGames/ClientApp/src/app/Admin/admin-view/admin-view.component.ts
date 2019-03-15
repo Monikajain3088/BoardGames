@@ -76,7 +76,8 @@ export class AdminViewComponent implements OnInit {
   // Function to call Add Game DialogBox Component- fires on click of "+Add Game"
   onCreate() {
     const dialogRef = this.dialog.open(AddgameComponent, {
-      width: '20%'});
+      width: '20%',minWidth:'300px'});
+    
 
     // Refresh the Game Table
     dialogRef.afterClosed().subscribe(result => {
@@ -104,6 +105,7 @@ export class AdminViewComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '40%';
+   dialogConfig.minWidth='300px';
     this.dialog.open(AdminvistordetailsComponent, dialogConfig);
   }
 }
