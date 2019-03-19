@@ -16,7 +16,7 @@ set rowData(theBar:any) {
   constructor(public http: HttpClient, @Inject('BASE_URL') public baseUrl: string) { }
 
   public GetVisitorGamesRatingDetails() {
-    return this.http.get<VisitorGameCollection[]>('https://localhost:44341/' + 'api/Admin/GamesVisitorRatings');
+    return this.http.get<VisitorGameCollection[]>(this.baseUrl + 'api/Admin/GamesVisitorRatings');
  }
 
  // Add Game on click of "+Add Game"

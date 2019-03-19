@@ -19,7 +19,7 @@ export class LoginService {
   accessToken: string;
   currentUser: string = null;
   redirectUrl: string;
-  public endpoint ='https://localhost:44341/' + '/api/Auth/GenerateToken';
+  public endpoint = this.baseUrl + '/api/Auth/GenerateToken';
   public get isLoggedIn(): boolean {
     if (localStorage.getItem('userName') == null) {
       return false;
